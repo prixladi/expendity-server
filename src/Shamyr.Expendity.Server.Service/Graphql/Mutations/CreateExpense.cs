@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Types;
-using Shamyr.Expendity.Server.Service.Graphql.Types;
+using Shamyr.Expendity.Server.Service.Graphql.Types.Expense;
 using Shamyr.Expendity.Server.Service.Models.Expense;
-using Shamyr.Expendity.Server.Service.Requests.Mutation;
+using Shamyr.Expendity.Server.Service.Requests.Expense;
 
 namespace Shamyr.Expendity.Server.Service.Graphql.Mutations
 {

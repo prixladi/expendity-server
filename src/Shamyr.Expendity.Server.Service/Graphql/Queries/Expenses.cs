@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Types;
-using Shamyr.Expendity.Server.Service.Graphql.Types;
+using Shamyr.Expendity.Server.Service.Graphql.Types.Expense;
 using Shamyr.Expendity.Server.Service.Models.Expense;
-using Shamyr.Expendity.Server.Service.Requests.Query;
+using Shamyr.Expendity.Server.Service.Requests.Expense;
 
 namespace Shamyr.Expendity.Server.Service.Graphql.Queries
 {
-  public class Scripts: FieldBase<object, ICollection<ExpenseModel>>
+  public class Expenses: FieldBase<object, ExpensesModel>
   {
     private const string _FilterArgumentName = "filter";
 
@@ -22,12 +22,12 @@ namespace Shamyr.Expendity.Server.Service.Graphql.Queries
       new QueryArgument<NonNullGraphType<ExpenseFilterInputType>> { Name = _FilterArgumentName }
     };
 
-    public Scripts(IServiceProvider serviceProvider)
+    public Expenses(IServiceProvider serviceProvider)
     {
       fServiceProvider = serviceProvider;
     }
 
-    internal override async Task<ICollection<ExpenseModel>> ResolveAsync(IResolveFieldContext<object> context)
+    internal override async Task<ExpensesModel> ResolveAsync(IResolveFieldContext<object> context)
     {
       var filter = await context.GetArgumentAsync<ExpenseFilterModel, ExpenseFilterModelValidator>(_FilterArgumentName, context.CancellationToken);
 

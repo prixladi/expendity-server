@@ -3,6 +3,7 @@
   public class NewExpenseTypeDto
   {
     public string Name { get; init; } = default!;
-    public string? Description { get; init; } = default!;
+    public string? Description { get; init; }
+    public int ProjectId { get; init; }
   }
 }

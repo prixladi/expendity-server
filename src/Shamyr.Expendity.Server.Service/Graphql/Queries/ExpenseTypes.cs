@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using GraphQL;
 using Shamyr.Expendity.Server.Service.Models.ExpenseType;
-using Shamyr.Expendity.Server.Service.Requests.Query;
+using Shamyr.Expendity.Server.Service.Requests.ExpenseType;
 
 namespace Shamyr.Expendity.Server.Service.Graphql.Queries
 {
-  public class Agents: FieldBase<object, ICollection<ExpenseTypeModel>>
+  public class ExpenseTypes: FieldBase<object, ICollection<ExpenseTypeModel>>
   {
     internal override string Name => "expenseTypes";
 
     private readonly IServiceProvider fServiceProvider;
 
-    public Agents(IServiceProvider serviceProvider)
+    public ExpenseTypes(IServiceProvider serviceProvider)
     {
       fServiceProvider = serviceProvider;
     }

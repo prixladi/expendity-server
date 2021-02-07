@@ -7,9 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="EFCore.NamingConventions" Version="5.0.2" />
-    <PackageReference Include="FluentValidation" Version="9.4.0" />
+    <PackageReference Include="FluentValidation" Version="9.5.0" />
+    <PackageReference Include="GraphQL.Authorization" Version="3.1.0" />
     <PackageReference Include="GraphQL.Server.Transports.AspNetCore.SystemTextJson" Version="4.4.1" />
     <PackageReference Include="GraphQL.Server.Ui.Playground" Version="4.4.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
@@ -21,6 +22,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Shamyr.AspNetCore.ApplicationInsights" Version="1.1.0" />
+    <PackageReference Include="Shamyr.Cloud.Authority.Client" Version="1.2.12" />
     <PackageReference Include="Shamyr.Threading" Version="1.1.0" />
   </ItemGroup>
 

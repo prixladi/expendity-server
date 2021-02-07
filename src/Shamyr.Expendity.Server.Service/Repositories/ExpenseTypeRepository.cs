@@ -23,18 +23,18 @@ namespace Shamyr.Expendity.Server.Service.Repositories
 
     public async Task<ExpenseTypeDto> CreateAsync(NewExpenseTypeDto dto, CancellationToken cancellationToken)
     {
-      var entity = Mapper.Map<ExpenseTypeEntity>(dto);
+      var entity = fMapper.Map<ExpenseTypeEntity>(dto);
 
       DbSet.Add(entity);
-      await Context.SaveChangesAsync(cancellationToken);
+      await fContext.SaveChangesAsync(cancellationToken);
 
-      return Mapper.Map<ExpenseTypeDto>(entity);
+      return fMapper.Map<ExpenseTypeDto>(entity);
     }
 
     public async Task<ICollection<ExpenseTypeDto>> GetAsync(CancellationToken cancellationToken)
     {
       return await DbSet
-        .ProjectTo<ExpenseTypeDto>(Mapper.ConfigurationProvider)
+        .ProjectTo<ExpenseTypeDto>(fMapper.ConfigurationProvider)
         .ToArrayAsync(cancellationToken);
     }
 
@@ -42,7 +42,7 @@ namespace Shamyr.Expendity.Server.Service.Repositories
     {
       return await DbSet
         .Where(e => e.Id == id)
-        .ProjectTo<ExpenseTypeDto>(Mapper.ConfigurationProvider)
+        .ProjectTo<ExpenseTypeDto>(fMapper.ConfigurationProvider)
         .SingleOrDefaultAsync(cancellationToken);
     }
   }

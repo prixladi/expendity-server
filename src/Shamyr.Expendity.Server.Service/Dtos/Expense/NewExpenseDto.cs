@@ -6,8 +6,8 @@ namespace Shamyr.Expendity.Server.Service.Dtos.Expense
   {
     public string Name { get; init; } = default!;
     public double Value { get; init; }
-    public string? Description { get; init; } = default!;
-    public DateTime? AddedUtc { get; init; } = default;
-    public int? TypeId { get; init; } = default!;
+    public string? Description { get; init; } 
+    public DateTime? AddedUtc { get; init; } 
+    public int? TypeId { get; init; }
   }
 }

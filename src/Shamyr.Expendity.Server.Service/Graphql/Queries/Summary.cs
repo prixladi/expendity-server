@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Types;
-using Shamyr.Expendity.Server.Service.Graphql.Types;
+using Shamyr.Expendity.Server.Service.Graphql.Types.Summary;
 using Shamyr.Expendity.Server.Service.Models.Summary;
-using Shamyr.Expendity.Server.Service.Requests.Query;
+using Shamyr.Expendity.Server.Service.Requests.Summary;
 
 namespace Shamyr.Expendity.Server.Service.Graphql.Queries
 {

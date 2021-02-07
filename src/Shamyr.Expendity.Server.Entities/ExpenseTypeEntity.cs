@@ -14,7 +14,13 @@ namespace Shamyr.Expendity.Server.Entities
     [StringLength(ValidationConstants._MaxDescriptionLength, MinimumLength = 1)]
     public string? Description { get; init; }
 
+    [Required]
+    public int ProjectId {get;init;}
+
+    [ForeignKey(nameof(ProjectId))]
+    public ProjectEntity Project { get; init; } = default!;
+
     [InverseProperty(nameof(ExpenseEntity.Type))]
-    public ICollection<ExpenseEntity> Expenses { get; init; } = default!; 
+    public List<ExpenseEntity> Expenses { get; init; } = default!; 
   }
 }

@@ -5,10 +5,13 @@ namespace Shamyr.Expendity.Server.Entities
 {
   public class EntityBase<T>
   {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public virtual T Id { get; init; } = default!;
   }
 
-  public class EntityBase: EntityBase<int> { }
+  public class EntityBase: EntityBase<int>
+  {
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public override int Id { get; init; } = default!;
+  }
 }

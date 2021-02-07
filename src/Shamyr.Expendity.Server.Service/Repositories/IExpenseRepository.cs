@@ -10,6 +10,7 @@ namespace Shamyr.Expendity.Server.Service.Repositories
     Task<bool> ExistsAsync(int id, CancellationToken cancellationToken);
     Task<ExpenseDto> CreateAsync(NewExpenseDto dto, CancellationToken cancellationToken);
     Task<ICollection<ExpenseDto>> GetAsync(ExpenseFilterDto filter, CancellationToken cancellationToken);
+    Task<long> CountAsync(ExpenseFilterDto filter, CancellationToken cancellationToken);
     Task<ExpenseDto> GetAsync(int id, CancellationToken cancellationToken);
   }
 }

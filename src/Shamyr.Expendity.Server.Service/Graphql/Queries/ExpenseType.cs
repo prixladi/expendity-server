@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Types;
 using Shamyr.Expendity.Server.Service.Models.ExpenseType;
-using Shamyr.Expendity.Server.Service.Requests.Query;
+using Shamyr.Expendity.Server.Service.Requests.ExpenseType;
 
 namespace Shamyr.Expendity.Server.Service.Graphql.Queries
 {
