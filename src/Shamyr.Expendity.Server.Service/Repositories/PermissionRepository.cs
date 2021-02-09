@@ -5,6 +5,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Shamyr.Expendity.Server.Entities;
 using Shamyr.Expendity.Server.Service.Database;
+using Shamyr.Expendity.Server.Service.Dtos;
 
 namespace Shamyr.Expendity.Server.Service.Repositories
 {
@@ -17,7 +18,7 @@ namespace Shamyr.Expendity.Server.Service.Repositories
     {
       return await fContext.Set<ProjectPermissionEntity>()
         .Include(e => e.Project)
-        .Where(e => e.Project.Deleted == false)
+        .Where(e => !e.Project.Deleted)
         .Where(e => e.ProjectId == projectId)
         .Where(e => e.UserId == userId)
         .Select(e => (PermissionType?)e.Type)
@@ -30,10 +31,27 @@ namespace Shamyr.Expendity.Server.Service.Repositories
         .Where(e => e.Id == expenseTypeId)
         .Include(e => e.Project)
         .ThenInclude(e => e.Permissions)
-        .Where(e => e.Project.Deleted == false)
+        .Where(e => !e.Project.Deleted)
         .SelectMany(e => e.Project.Permissions)
         .Where(e => e.UserId == userId)
         .Select(e => (PermissionType?)e.Type)
+        .SingleOrDefaultAsync(cancellationToken);
+    }
+
+    public async Task<ExpensePermissionDto> GetForExpenseAsync(int expenseId, int userId, CancellationToken cancellationToken)
+    {
+      return await fContext.Set<ExpenseEntity>()
+        .Where(e => e.Id == expenseId)
+        .Include(e => e.Project)
+        .ThenInclude(e => e.Permissions)
+        .Where(e => !e.Project.Deleted)
+        .SelectMany(e => e.Project.Permissions, (e, p) => new ExpensePermissionDto
+        {
+          CreatorUserId = e.CreatorUserId,
+          Type = p.Type,
+          UserId = p.UserId
+        })
+        .Where(dto => dto.UserId == userId)
         .SingleOrDefaultAsync(cancellationToken);
     }
   }

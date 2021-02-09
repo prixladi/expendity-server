@@ -10,13 +10,21 @@ namespace Shamyr.Expendity.Server.Service.Mapper
   {
     public void Create(IMapperConfigurationExpression exp)
     {
-      exp.CreateMap<ExpenseEntity, ExpenseDto>();
+      exp.CreateMap<ExpenseEntity, ExpenseDto>()
+        .ForMember(d => d.CreatorUserEmail, me => me.MapFrom(e => e.CreatorUser.Email))
+        .ForMember(d => d.LastUpdaterUserEmail, me => me.MapFrom(e => e.LastUpdaterUser == null ? null : e.LastUpdaterUser.Email));
+
       exp.CreateMap<ExpenseDto, ExpenseModel>();
 
       exp.CreateMap<ExpenseFilterModel, ExpenseFilterDto>();
 
-      exp.CreateMap<NewExpenseModel, NewExpenseDto>();
-      exp.CreateMap<NewExpenseDto, ExpenseEntity>()
+      exp.CreateMap<CreateExpenseModel, CreateExpenseDto>();
+      exp.CreateMap<UpdateExpenseModel, UpdateExpenseDto>();
+
+      exp.CreateMap<CreateExpenseDto, ExpenseEntity>()
+        .ForMember(e => e.AddedUtc, mc => mc.MapFrom(me => me.AddedUtc ?? DateTime.UtcNow));
+
+      exp.CreateMap<UpdateExpenseDto, ExpenseEntity>()
         .ForMember(e => e.AddedUtc, mc => mc.MapFrom(me => me.AddedUtc ?? DateTime.UtcNow));
     }
   }

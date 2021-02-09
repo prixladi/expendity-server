@@ -20,9 +20,8 @@ namespace Shamyr.Expendity.Server.Service.Database
     protected DbSet<TEntity> DbSet => fContext.Set<TEntity>();
 
     protected RepositoryBase(DatabaseContext context, IMapper mapper)
-      :base(context, mapper){}
+      : base(context, mapper) { }
   }
-
 
   public abstract class RepositoryBase
   {

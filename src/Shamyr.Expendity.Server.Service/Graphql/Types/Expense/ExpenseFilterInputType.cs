@@ -11,6 +11,7 @@ namespace Shamyr.Expendity.Server.Service.Graphql.Types.Expense
       Field(x => x.Count);
       Field(x => x.From, nullable: true);
       Field(x => x.To, nullable: true);
+      Field(x => x.ProjectId);
     }
   }
 }

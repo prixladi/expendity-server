@@ -16,10 +16,10 @@ namespace Shamyr.Expendity.Server.Service.Handers.Requests.Project
     private readonly IMapper fMapper;
 
     public CreateProjectRequestHandler(
-      IProjectRepository projectRepository, 
+      IProjectRepository projectRepository,
       IClaimsIdentityService claimsIdentityService,
       IMapper mapper)
-      :base(claimsIdentityService)
+      : base(claimsIdentityService)
     {
       fProjectRepository = projectRepository;
       fMapper = mapper;
@@ -27,7 +27,7 @@ namespace Shamyr.Expendity.Server.Service.Handers.Requests.Project
 
     public async Task<ProjectModel> Handle(CreateProjectRequest request, CancellationToken cancellationToken)
     {
-      var project = fMapper.Map<NewProjectModel, NewProjectDto>(request.Model);
+      var project = fMapper.Map<CreateProjectModel, CreateProjectDto>(request.Model);
 
       var dto = await fProjectRepository.CreateAsync(project, GetIdentity().Id, cancellationToken);
       return fMapper.Map<ProjectDto, ProjectModel>(dto);

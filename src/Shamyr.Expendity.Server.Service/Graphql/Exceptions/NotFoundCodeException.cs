@@ -15,5 +15,17 @@ namespace Shamyr.Expendity.Server.Service.Graphql.Exceptions
     {
       Code = Constants.ErrorCodes._NotFound;
     }
+
+    public NotFoundCodeException(string message, System.Collections.IDictionary data)
+      : base(message, data)
+    {
+      Code = Constants.ErrorCodes._NotFound;
+    }
+
+    public NotFoundCodeException(string message, System.Exception exception)
+      : base(message, exception)
+    {
+      Code = Constants.ErrorCodes._NotFound;
+    }
   }
 }

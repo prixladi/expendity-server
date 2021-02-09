@@ -3,9 +3,9 @@ using Shamyr.Expendity.Server.Entities;
 
 namespace Shamyr.Expendity.Server.Service.Models.Project
 {
-  public class NewProjectModelValidator: AbstractValidator<NewProjectModel>
+  public class CreateProjectModelValidator: AbstractValidator<CreateProjectModel>
   {
-    public NewProjectModelValidator()
+    public CreateProjectModelValidator()
     {
       RuleFor(x => x.Name)
         .NotNull()

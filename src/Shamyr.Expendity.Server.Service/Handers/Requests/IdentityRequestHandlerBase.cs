@@ -1,5 +1,4 @@
-﻿using System;
-using Shamyr.Cloud.Authority.Client.Services;
+﻿using Shamyr.Cloud.Authority.Client.Services;
 
 namespace Shamyr.Expendity.Server.Service.Handers.Requests
 {

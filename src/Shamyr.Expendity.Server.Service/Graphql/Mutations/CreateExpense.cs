@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Types;
 using Shamyr.Expendity.Server.Service.Graphql.Types.Expense;
@@ -8,7 +7,7 @@ using Shamyr.Expendity.Server.Service.Requests.Expense;
 
 namespace Shamyr.Expendity.Server.Service.Graphql.Mutations
 {
-  public class CreateExpense: FieldBase<object, ExpenseModel>
+  public class CreateExpense: OperationBase<object, ExpenseModel>
   {
     private const string _ExpenseArgumentName = "expense";
 
@@ -19,18 +18,11 @@ namespace Shamyr.Expendity.Server.Service.Graphql.Mutations
       new QueryArgument<NonNullGraphType<ExpenseInputType>> { Name = _ExpenseArgumentName, Description = "New Expense" }
     };
 
-    private readonly IServiceProvider fServiceProvider;
-
-    public CreateExpense(IServiceProvider serviceProvider)
-    {
-      fServiceProvider = serviceProvider;
-    }
-
     internal override async Task<ExpenseModel> ResolveAsync(IResolveFieldContext<object> context)
     {
-      var model = await context.GetArgumentAsync<NewExpenseModel, NewExpenseModelValidator>(_ExpenseArgumentName, context.CancellationToken);
+      var model = await context.GetArgumentAsync<CreateExpenseModel, CreateExpenseModelValidator>(_ExpenseArgumentName, context.CancellationToken);
 
-      using var scope = new Scope(fServiceProvider);
+      using var scope = new Scope(context.RequestServices);
       return await scope.Sender.Send(new CreateExpenseRequest(model), context.CancellationToken);
     }
   }

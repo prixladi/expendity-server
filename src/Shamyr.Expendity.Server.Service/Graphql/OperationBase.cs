@@ -4,7 +4,7 @@ using GraphQL.Types;
 
 namespace Shamyr.Expendity.Server.Service.Graphql
 {
-  public abstract class FieldBase<TSourceType, TReturnType>
+  public abstract class OperationBase<TSourceType, TReturnType>
   {
     internal abstract string Name { get; }
     internal virtual string? Description { get; } = null;

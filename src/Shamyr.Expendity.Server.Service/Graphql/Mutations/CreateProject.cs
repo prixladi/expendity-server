@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Types;
 using Shamyr.Expendity.Server.Service.Graphql.Types.Project;
@@ -8,7 +7,7 @@ using Shamyr.Expendity.Server.Service.Requests.Project;
 
 namespace Shamyr.Expendity.Server.Service.Graphql.Mutations
 {
-  public class CreateProject: FieldBase<object, ProjectModel>
+  public class CreateProject: OperationBase<object, ProjectModel>
   {
     private const string _ProjectArgumentName = "project";
 
@@ -19,18 +18,11 @@ namespace Shamyr.Expendity.Server.Service.Graphql.Mutations
       new QueryArgument<NonNullGraphType<ProjectInputType>> { Name = _ProjectArgumentName, Description = "New Project" }
     };
 
-    private readonly IServiceProvider fServiceProvider;
-
-    public CreateProject(IServiceProvider serviceProvider)
-    {
-      fServiceProvider = serviceProvider;
-    }
-
     internal override async Task<ProjectModel> ResolveAsync(IResolveFieldContext<object> context)
     {
-      var model = await context.GetArgumentAsync<NewProjectModel, NewProjectModelValidator>(_ProjectArgumentName, context.CancellationToken);
+      var model = await context.GetArgumentAsync<CreateProjectModel, CreateProjectModelValidator>(_ProjectArgumentName, context.CancellationToken);
 
-      using var scope = new Scope(fServiceProvider);
+      using var scope = new Scope(context.RequestServices);
       return await scope.Sender.Send(new CreateProjectRequest(model), context.CancellationToken);
     }
   }

@@ -5,9 +5,9 @@ namespace Shamyr.Expendity.Server.Service.Requests.Project
 {
   public class CreateProjectRequest: IRequest<ProjectModel>
   {
-    public NewProjectModel Model { get; }
+    public CreateProjectModel Model { get; }
 
-    public CreateProjectRequest(NewProjectModel model)
+    public CreateProjectRequest(CreateProjectModel model)
     {
       Model = model;
     }

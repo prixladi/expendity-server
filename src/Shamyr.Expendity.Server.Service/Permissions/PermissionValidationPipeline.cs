@@ -6,7 +6,7 @@ using Shamyr.Expendity.Server.Service.Factories;
 namespace Shamyr.Expendity.Server.Service.Permissions
 {
   public class PermissionValidationPipeline<TRequest>: IRequestPreProcessor<TRequest>
-    where TRequest: notnull
+    where TRequest : notnull
   {
     private readonly IPermissionHandlerFactory fPermissionHandlerFactory;
 

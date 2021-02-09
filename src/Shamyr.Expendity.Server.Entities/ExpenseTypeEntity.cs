@@ -15,12 +15,12 @@ namespace Shamyr.Expendity.Server.Entities
     public string? Description { get; init; }
 
     [Required]
-    public int ProjectId {get;init;}
+    public int ProjectId { get; init; }
 
     [ForeignKey(nameof(ProjectId))]
     public ProjectEntity Project { get; init; } = default!;
 
     [InverseProperty(nameof(ExpenseEntity.Type))]
-    public List<ExpenseEntity> Expenses { get; init; } = default!; 
+    public List<ExpenseEntity> Expenses { get; init; } = default!;
   }
 }

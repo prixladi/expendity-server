@@ -14,7 +14,7 @@ namespace Shamyr.Expendity.Server.Service.Handers.Requests.Summary
     private readonly ISummaryRepository fSummaryRepository;
     private readonly IMapper fMapper;
 
-    public SummaryRequestHandler(ISummaryRepository summaryRepository,IMapper mapper)
+    public SummaryRequestHandler(ISummaryRepository summaryRepository, IMapper mapper)
     {
       fSummaryRepository = summaryRepository;
       fMapper = mapper;

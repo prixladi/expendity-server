@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using GraphQL.Authorization;
+﻿using GraphQL.Authorization;
 using GraphQL.Types;
 using Shamyr.Expendity.Server.Service.Graphql.Queries;
 using Shamyr.Expendity.Server.Service.Graphql.Types.Expense;
@@ -16,33 +14,26 @@ namespace Shamyr.Expendity.Server.Service.Graphql
 {
   public class Query: ObjectGraphTypeBase<object>, IQuery
   {
-    private readonly IServiceProvider fServiceProvider;
-
-    public Query(IServiceProvider serviceProvider)
+    public Query()
     {
-      fServiceProvider = serviceProvider;
-
       Name = "Query";
 
-      Register<ProjectDetailType, ProjectDetailModel>(new Project(fServiceProvider))
+      Register<ProjectDetailType, ProjectDetailModel>(new Project())
         .AuthorizeWith(Constants.Auth._Authenticated);
 
-      Register<ProjectsType, ProjectsModel>(new Projects(fServiceProvider))
+      Register<ProjectsType, ProjectsModel>(new Projects())
         .AuthorizeWith(Constants.Auth._Authenticated);
 
-      Register<NonNullGraphType<Types.Expense.ExpenseType>, ExpenseModel>(new Expense(fServiceProvider))
+      Register<NonNullGraphType<Types.Expense.ExpenseType>, ExpenseModel>(new Expense())
         .AuthorizeWith(Constants.Auth._Authenticated);
 
-      Register<NonNullGraphType<ExpensesType>, ExpensesModel>(new Expenses(fServiceProvider))
+      Register<NonNullGraphType<ExpensesType>, ExpensesModel>(new Expenses())
         .AuthorizeWith(Constants.Auth._Authenticated);
 
-      Register<NonNullGraphType<ExpenseTypeType>, ExpenseTypeModel>(new Queries.ExpenseType(fServiceProvider))
+      Register<NonNullGraphType<ExpenseTypeType>, ExpenseTypeModel>(new Queries.ExpenseType())
         .AuthorizeWith(Constants.Auth._Authenticated);
 
-      Register<NonNullGraphType<ListGraphType<NonNullGraphType<ExpenseTypeType>>>, ICollection<ExpenseTypeModel>>(new ExpenseTypes(fServiceProvider))
-        .AuthorizeWith(Constants.Auth._Authenticated);
-
-      Register<NonNullGraphType<SummaryType>, SummaryModel>(new Summary(fServiceProvider))
+      Register<NonNullGraphType<SummaryType>, SummaryModel>(new Summary())
         .AuthorizeWith(Constants.Auth._Authenticated);
     }
   }

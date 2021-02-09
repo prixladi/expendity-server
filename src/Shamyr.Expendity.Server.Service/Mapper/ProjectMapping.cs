@@ -9,11 +9,11 @@ namespace Shamyr.Expendity.Server.Service.Mapper
   {
     public void Create(IMapperConfigurationExpression exp)
     {
-      exp.CreateMap<NewProjectModel, NewProjectDto>();
-      exp.CreateMap<NewProjectDto, ProjectEntity>();
+      exp.CreateMap<CreateProjectModel, CreateProjectDto>();
+      exp.CreateMap<CreateProjectDto, ProjectEntity>();
 
-      exp.CreateMap<ProjectUpdateModel, ProjectUpdateDto>();
-      exp.CreateMap<ProjectUpdateDto, ProjectEntity>();
+      exp.CreateMap<UpdateProjectModel, UpdateProjectDto>();
+      exp.CreateMap<UpdateProjectDto, ProjectEntity>();
 
       exp.CreateMap<ProjectDto, ProjectModel>();
       exp.CreateMap<ProjectDetailDto, ProjectDetailModel>();

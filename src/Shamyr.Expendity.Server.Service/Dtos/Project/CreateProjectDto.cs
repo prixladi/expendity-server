@@ -1,6 +1,6 @@
-﻿namespace Shamyr.Expendity.Server.Service.Models.Project
+﻿namespace Shamyr.Expendity.Server.Service.Dtos.Project
 {
-  public class ProjectUpdateModel
+  public class CreateProjectDto
   {
     public string Name { get; init; } = default!;
     public string? Description { get; init; }

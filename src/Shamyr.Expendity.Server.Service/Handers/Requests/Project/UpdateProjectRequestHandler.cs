@@ -23,7 +23,7 @@ namespace Shamyr.Expendity.Server.Service.Handers.Requests.Project
 
     public async Task<ProjectModel> Handle(UpdateProjectRequest request, CancellationToken cancellationToken)
     {
-      var update = fMapper.Map<ProjectUpdateModel, ProjectUpdateDto>(request.Model);
+      var update = fMapper.Map<UpdateProjectModel, UpdateProjectDto>(request.Model);
 
       var dto = await fProjectRepository.UpdateAsync(request.Id, update, cancellationToken);
       if (dto is null)

@@ -1,21 +1,22 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Shamyr.Logging;
 using Shamyr.Expendity.Server.Service.Database;
-using System;
+using Shamyr.Logging;
 
 namespace Shamyr.Expendity.Server.Service.HostedServices
 {
   public class MigrationService: IHostedService
   {
-    private readonly DatabaseContext fDatabaseContext;
+    private readonly IServiceProvider fServiceProvider;
     private readonly ILogger fLogger;
 
-    public MigrationService(DatabaseContext databaseContext, ILogger logger)
+    public MigrationService(IServiceProvider serviceProvider, ILogger logger)
     {
-      fDatabaseContext = databaseContext;
+      fServiceProvider = serviceProvider;
       fLogger = logger;
     }
 
@@ -25,11 +26,14 @@ namespace Shamyr.Expendity.Server.Service.HostedServices
       {
         try
         {
-          await fDatabaseContext.Database.MigrateAsync(cancellationToken);
+          using var scope = fServiceProvider.CreateScope();
+          var dbContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+          await dbContext.Database.MigrateAsync(cancellationToken);
+
           fLogger.LogInformation(context, "Database migrations executed.");
           context.Success();
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
           fLogger.LogException(context, ex);
           context.Fail();

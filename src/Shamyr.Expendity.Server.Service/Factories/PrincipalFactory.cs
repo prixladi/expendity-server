@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,11 +31,6 @@ namespace Shamyr.Expendity.Server.Service.Factories
       {
         Username = user.Username
       };
-    }
-
-    protected override Task<IEnumerable<string>> GetRolesAsync(IServiceProvider serviceProvider, ClaimsIdentity identity, CancellationToken cancellationToken)
-    {
-      return Task.FromResult<IEnumerable<string>>(Array.Empty<string>());
     }
   }
 }

@@ -22,7 +22,7 @@ namespace Shamyr.Expendity.Server.Service.Handers.Requests.ExpenseType
 
     public async Task<ExpenseTypeModel> Handle(CreateExpenseTypeRequest request, CancellationToken cancellationToken)
     {
-      var dto = fMapper.Map<NewExpenseTypeDto>(request.Model);
+      var dto = fMapper.Map<CreateExpenseTypeDto>(request.Model);
       var detail = await fExpenseTypeRepository.CreateAsync(dto, cancellationToken);
 
       return fMapper.Map<ExpenseTypeModel>(detail);

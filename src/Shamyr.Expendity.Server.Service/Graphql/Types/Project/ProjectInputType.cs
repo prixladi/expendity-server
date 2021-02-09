@@ -3,7 +3,7 @@ using Shamyr.Expendity.Server.Service.Models.Project;
 
 namespace Shamyr.Expendity.Server.Service.Graphql.Types.Project
 {
-  public class ProjectInputType: InputObjectGraphType<NewProjectModel>
+  public class ProjectInputType: InputObjectGraphType<CreateProjectModel>
   {
     public ProjectInputType()
     {

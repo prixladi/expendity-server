@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
 using Shamyr.Expendity.Server.Entities;
 
-namespace Shamyr.Expendity.Server.Service.Models.ExpenseType
+namespace Shamyr.Expendity.Server.Service.Models.Expense
 {
-  public class NewExpenseTypeModelValidator: AbstractValidator<NewExpenseTypeModel>
+  public class CreateExpenseModelValidator: AbstractValidator<CreateExpenseModel>
   {
-    public NewExpenseTypeModelValidator()
+    public CreateExpenseModelValidator()
     {
       RuleFor(x => x.Name)
         .NotNull()
@@ -14,6 +14,9 @@ namespace Shamyr.Expendity.Server.Service.Models.ExpenseType
 
       RuleFor(x => x.Description)
         .MaximumLength(ValidationConstants._MaxDescriptionLength);
+
+      RuleFor(x => x.Value)
+        .GreaterThanOrEqualTo(0);
     }
   }
 }

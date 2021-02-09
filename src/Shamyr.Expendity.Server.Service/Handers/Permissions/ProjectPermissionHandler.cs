@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Shamyr.Cloud.Authority.Client.Services;
 using Shamyr.Expendity.Server.Service.Graphql.Exceptions;
@@ -13,7 +12,7 @@ namespace Shamyr.Expendity.Server.Service.Handers.Permissions
     private readonly IClaimsIdentityService fClaimsIdentityService;
     private readonly IPermissionRepository fPermissionRepository;
 
-    public ProjectPermissionHandler(IClaimsIdentityService claimsIdentityService,IPermissionRepository permissionRepository)
+    public ProjectPermissionHandler(IClaimsIdentityService claimsIdentityService, IPermissionRepository permissionRepository)
     {
       fClaimsIdentityService = claimsIdentityService;
       fPermissionRepository = permissionRepository;
@@ -27,7 +26,7 @@ namespace Shamyr.Expendity.Server.Service.Handers.Permissions
       if (permissionType == null)
         throw new NotFoundCodeException(request.ProjectId, "Project");
 
-      if(permissionType.Value < request.RequiredPermission)
+      if (permissionType.Value < request.RequiredPermission)
         throw new ForbiddenCodeException(request.ProjectId, "Project", request.RequiredPermission);
     }
   }

@@ -3,7 +3,7 @@ using Shamyr.Expendity.Server.Service.Models.Expense;
 
 namespace Shamyr.Expendity.Server.Service.Graphql.Types.Expense
 {
-  public class ExpenseInputType: InputObjectGraphType<NewExpenseModel>
+  public class ExpenseInputType: InputObjectGraphType<CreateExpenseModel>
   {
     public ExpenseInputType()
     {
@@ -12,6 +12,7 @@ namespace Shamyr.Expendity.Server.Service.Graphql.Types.Expense
       Field(x => x.Description, nullable: true);
       Field(x => x.AddedUtc, nullable: true);
       Field(x => x.TypeId, nullable: true);
+      Field(x => x.ProjectId);
     }
   }
 }

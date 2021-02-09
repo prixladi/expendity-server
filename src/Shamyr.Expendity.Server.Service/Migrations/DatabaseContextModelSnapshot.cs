@@ -2,13 +2,11 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shamyr.Expendity.Server.Service.Database;
 
 namespace Shamyr.Expendity.Server.Service.Migrations
 {
-    [DbContext(typeof(DatabaseContext))]
+  [DbContext(typeof(DatabaseContext))]
     partial class DatabaseContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -31,16 +29,28 @@ namespace Shamyr.Expendity.Server.Service.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("added_utc");
 
+                    b.Property<int>("CreatorUserId")
+                        .HasColumnType("int")
+                        .HasColumnName("creator_user_id");
+
                     b.Property<string>("Description")
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)")
                         .HasColumnName("description");
+
+                    b.Property<int?>("LastUpdaterUserId")
+                        .HasColumnType("int")
+                        .HasColumnName("last_updater_user_id");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("name");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int")
+                        .HasColumnName("project_id");
 
                     b.Property<int?>("TypeId")
                         .HasColumnType("int")
@@ -55,6 +65,15 @@ namespace Shamyr.Expendity.Server.Service.Migrations
 
                     b.HasIndex("AddedUtc")
                         .HasDatabaseName("ix_expenses_added_utc");
+
+                    b.HasIndex("CreatorUserId")
+                        .HasDatabaseName("ix_expenses_creator_user_id");
+
+                    b.HasIndex("LastUpdaterUserId")
+                        .HasDatabaseName("ix_expenses_last_updater_user_id");
+
+                    b.HasIndex("ProjectId")
+                        .HasDatabaseName("ix_expenses_project_id");
 
                     b.HasIndex("TypeId")
                         .HasDatabaseName("ix_expenses_type_id");
@@ -201,11 +220,37 @@ namespace Shamyr.Expendity.Server.Service.Migrations
 
             modelBuilder.Entity("Shamyr.Expendity.Server.Entities.ExpenseEntity", b =>
                 {
+                    b.HasOne("Shamyr.Expendity.Server.Entities.UserEntity", "CreatorUser")
+                        .WithMany()
+                        .HasForeignKey("CreatorUserId")
+                        .HasConstraintName("fk_expenses_users_creator_user_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Shamyr.Expendity.Server.Entities.UserEntity", "LastUpdaterUser")
+                        .WithMany()
+                        .HasForeignKey("LastUpdaterUserId")
+                        .HasConstraintName("fk_expenses_users_last_updater_user_id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Shamyr.Expendity.Server.Entities.ProjectEntity", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .HasConstraintName("fk_expenses_projects_project_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Shamyr.Expendity.Server.Entities.ExpenseTypeEntity", "Type")
                         .WithMany("Expenses")
                         .HasForeignKey("TypeId")
                         .HasConstraintName("fk_expenses_expense_types_type_id")
                         .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("CreatorUser");
+
+                    b.Navigation("LastUpdaterUser");
+
+                    b.Navigation("Project");
 
                     b.Navigation("Type");
                 });

@@ -1,8 +1,6 @@
 ﻿using MediatR;
-using MediatR.Pipeline;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Shamyr.Cloud.Authority.Client.Authentication;
 using Shamyr.Expendity.Server.Service.Configs;
 using Shamyr.Expendity.Server.Service.Database;
@@ -20,7 +18,7 @@ namespace Shamyr.Expendity.Server.Service
 
       services.AddApplicationInsights(ApplicationInsightsConfig.Setup);
       services.AddHttpContextAccessor();
-      
+
       services.AddAutoMapper(MapperConfig.Configure, typeof(Startup));
       services.AddMediatR(typeof(Startup));
 

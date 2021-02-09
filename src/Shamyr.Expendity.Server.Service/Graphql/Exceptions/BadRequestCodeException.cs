@@ -5,14 +5,20 @@ namespace Shamyr.Expendity.Server.Service.Graphql.Exceptions
 {
   public class BadRequestCodeException: ExecutionError
   {
-    public BadRequestCodeException(string message) 
+    public BadRequestCodeException(string message)
       : base(message)
     {
       Code = Constants.ErrorCodes._BadRequest;
     }
 
-    public BadRequestCodeException(string message, IDictionary data) 
+    public BadRequestCodeException(string message, IDictionary data)
       : base(message, data)
+    {
+      Code = Constants.ErrorCodes._BadRequest;
+    }
+
+    public BadRequestCodeException(string message, System.Exception exception)
+      : base(message, exception)
     {
       Code = Constants.ErrorCodes._BadRequest;
     }

@@ -17,10 +17,22 @@ namespace Shamyr.Expendity.Server.Service.Database
         .WithMany(e => e!.Expenses)
         .OnDelete(DeleteBehavior.SetNull);
 
-     builder
+      builder
+         .Entity<ExpenseEntity>()
+         .Property(e => e.AddedUtc)
+         .HasConversion(date => date, date => DateTime.SpecifyKind(date, DateTimeKind.Utc));
+
+      builder
         .Entity<ExpenseEntity>()
-        .Property(e => e.AddedUtc)
-        .HasConversion(date => date, date => DateTime.SpecifyKind(date, DateTimeKind.Utc));
+        .HasOne(e => e.CreatorUser)
+        .WithMany()
+        .OnDelete(DeleteBehavior.Restrict);
+
+      builder
+        .Entity<ExpenseEntity>()
+        .HasOne(e => e.LastUpdaterUser)
+        .WithMany()
+        .OnDelete(DeleteBehavior.Restrict);
     }
 
     private static void BuildByConvention(ModelBuilder builder)

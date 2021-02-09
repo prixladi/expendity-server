@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
 using Shamyr.Expendity.Server.Entities;
 
-namespace Shamyr.Expendity.Server.Service.Models.Project
+namespace Shamyr.Expendity.Server.Service.Models.ExpenseType
 {
-  public class ProjectUpdateModelValidator: AbstractValidator<ProjectUpdateModel>
+  public class UpdateExpenseTypeModelValidator: AbstractValidator<UpdateExpenseTypeModel>
   {
-    public ProjectUpdateModelValidator()
+    public UpdateExpenseTypeModelValidator()
     {
       RuleFor(x => x.Name)
         .NotNull()

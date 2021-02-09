@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Shamyr.Expendity.Server.Entities;
 using Shamyr.Expendity.Server.Service.Dtos.Users;
+using Shamyr.Expendity.Server.Service.Models;
 
 namespace Shamyr.Expendity.Server.Service.Mapper
 {
@@ -10,6 +11,8 @@ namespace Shamyr.Expendity.Server.Service.Mapper
     {
       exp.CreateMap<UserProfileDto, UserEntity>();
       exp.CreateMap<UserEntity, UserDto>();
+
+      exp.CreateMap<UserIdentity, MeModel>();
     }
   }
 }

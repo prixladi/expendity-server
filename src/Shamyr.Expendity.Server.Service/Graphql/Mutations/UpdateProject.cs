@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Types;
 using Shamyr.Expendity.Server.Service.Graphql.Types.Project;
@@ -10,7 +7,7 @@ using Shamyr.Expendity.Server.Service.Requests.Project;
 
 namespace Shamyr.Expendity.Server.Service.Graphql.Mutations
 {
-  public class UpdateProject: FieldBase<object, ProjectModel>
+  public class UpdateProject: OperationBase<object, ProjectModel>
   {
     private const string _IdArgumentName = "id";
     private const string _UpdateArgumentName = "update";
@@ -23,19 +20,12 @@ namespace Shamyr.Expendity.Server.Service.Graphql.Mutations
       new QueryArgument<NonNullGraphType<ProjectUpdateInputType>> { Name = _UpdateArgumentName }
     };
 
-    private readonly IServiceProvider fServiceProvider;
-
-    public UpdateProject(IServiceProvider serviceProvider)
-    {
-      fServiceProvider = serviceProvider;
-    }
-
     internal override async Task<ProjectModel> ResolveAsync(IResolveFieldContext<object> context)
     {
       var id = context.GetArgument<int>(_IdArgumentName);
-      var model = await context.GetArgumentAsync<ProjectUpdateModel, ProjectUpdateModelValidator>(_UpdateArgumentName, context.CancellationToken);
-      
-      using var scope = new Scope(fServiceProvider);
+      var model = await context.GetArgumentAsync<UpdateProjectModel, UpdateProjectModelValidator>(_UpdateArgumentName, context.CancellationToken);
+
+      using var scope = new Scope(context.RequestServices);
       return await scope.Sender.Send(new UpdateProjectRequest(id, model), context.CancellationToken);
     }
   }

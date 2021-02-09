@@ -6,7 +6,7 @@ namespace Shamyr.Expendity.Server.Service.Graphql
 {
   public class SchemaRoot: Schema, ISchemaRoot
   {
-    public SchemaRoot(IServiceProvider services) 
+    public SchemaRoot(IServiceProvider services)
       : base(services)
     {
       Query = services.GetRequiredService<IQuery>();

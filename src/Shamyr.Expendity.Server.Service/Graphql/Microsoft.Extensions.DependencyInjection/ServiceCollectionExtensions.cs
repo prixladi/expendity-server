@@ -1,10 +1,8 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using GraphQL.Authorization;
 using GraphQL.Server;
 using GraphQL.Types;
 using GraphQL.Validation;
-using Shamyr.Expendity.Server.Service;
 using Shamyr.Expendity.Server.Service.Graphql;
 using Shamyr.Expendity.Server.Service.Graphql.Types;
 
@@ -14,14 +12,8 @@ namespace Microsoft.Extensions.DependencyInjection
   {
     public static void AddGraphQLSchema(this IServiceCollection services)
     {
-      services.AddGraphQL(options =>
-      {
-        options.EnableMetrics = true;
-      })
-     .AddUserContextBuilder(context =>
-     {
-       return new UserContext(context.User);
-     })
+      services.AddGraphQL(options => options.EnableMetrics = true)
+      .AddUserContextBuilder(context => new UserContext(context.User))
       .AddSystemTextJson()
 #if DEBUG
       .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true);
@@ -36,8 +28,7 @@ namespace Microsoft.Extensions.DependencyInjection
       services.AddGraphQLAuth();
 
       typeof(PaginationInputType).Assembly.GetExportedTypes()
-        .Where(type => type.Namespace!.StartsWith(typeof(PaginationInputType).Namespace!))
-        .Where(type => !type.IsAbstract && (
+        .Where(type => type.Namespace!.StartsWith(typeof(PaginationInputType).Namespace!) && !type.IsAbstract && (
           typeof(ScalarGraphType).IsAssignableFrom(type) ||
           typeof(IObjectGraphType).IsAssignableFrom(type) ||
           typeof(IInputObjectGraphType).IsAssignableFrom(type)))
@@ -50,7 +41,7 @@ namespace Microsoft.Extensions.DependencyInjection
       services.AddSingleton<IAuthorizationEvaluator, AuthorizationEvaluator>();
       services.AddTransient<IValidationRule, AuthorizationValidationRule>();
 
-      services.AddTransient(s =>
+      services.AddTransient(_ =>
       {
         var authSettings = new AuthorizationSettings();
         authSettings.AddPolicy(Constants.Auth._Authenticated, p => p.RequireAuthenticatedUser());

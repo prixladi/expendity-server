@@ -24,8 +24,23 @@ namespace Shamyr.Expendity.Server.Entities
 
     public int? TypeId { get; init; }
 
+    public int ProjectId { get; init; }
+
+    public int CreatorUserId { get; init; }
+
+    public int? LastUpdaterUserId { get; init; }
+
     [ForeignKey(nameof(TypeId))]
     [InverseProperty(nameof(ExpenseTypeEntity.Expenses))]
-    public ExpenseTypeEntity? Type { get; init; } = default!;
+    public ExpenseTypeEntity? Type { get; init; }
+
+    [ForeignKey(nameof(ProjectId))]
+    public ProjectEntity Project { get; init; } = default!;
+
+    [ForeignKey(nameof(CreatorUserId))]
+    public UserEntity CreatorUser { get; init; } = default!;
+
+    [ForeignKey(nameof(LastUpdaterUserId))]
+    public UserEntity? LastUpdaterUser { get; init; }
   }
 }

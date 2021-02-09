@@ -14,9 +14,9 @@ namespace Shamyr.Expendity.Server.Service.Repositories
     public ProjectRepository(DatabaseContext context, IMapper mapper)
       : base(context, mapper) { }
 
-    public async Task<ProjectDto> CreateAsync(NewProjectDto dto, int userId, CancellationToken cancellationToken)
+    public async Task<ProjectDto> CreateAsync(CreateProjectDto dto, int userId, CancellationToken cancellationToken)
     {
-      var entity = fMapper.Map<NewProjectDto, ProjectEntity>(dto);
+      var entity = fMapper.Map<CreateProjectDto, ProjectEntity>(dto);
 
       await InTrasactionAsync(async () =>
       {
@@ -68,7 +68,7 @@ namespace Shamyr.Expendity.Server.Service.Repositories
       };
     }
 
-    public async Task<ProjectDto?> UpdateAsync(int id, ProjectUpdateDto update, CancellationToken cancellationToken)
+    public async Task<ProjectDto?> UpdateAsync(int id, UpdateProjectDto update, CancellationToken cancellationToken)
     {
       var entity = await DbSet
         .Where(e => e.Id == id)

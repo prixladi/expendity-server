@@ -1,6 +1,6 @@
-﻿namespace Shamyr.Expendity.Server.Service.Dtos.Project
+﻿namespace Shamyr.Expendity.Server.Service.Dtos.ExpenseType
 {
-  public class ProjectUpdateDto
+  public class UpdateExpenseTypeDto
   {
     public string Name { get; init; } = default!;
     public string? Description { get; init; }

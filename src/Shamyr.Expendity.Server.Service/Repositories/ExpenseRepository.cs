@@ -21,7 +21,7 @@ namespace Shamyr.Expendity.Server.Service.Repositories
       return await DbSet.AnyAsync(e => e.Id == id, cancellationToken);
     }
 
-    public async Task<ExpenseDto> CreateAsync(NewExpenseDto dto, CancellationToken cancellationToken)
+    public async Task<ExpenseDto> CreateAsync(CreateExpenseDto dto, CancellationToken cancellationToken)
     {
       var entity = fMapper.Map<ExpenseEntity>(dto);
 
@@ -34,8 +34,11 @@ namespace Shamyr.Expendity.Server.Service.Repositories
     public async Task<ICollection<ExpenseDto>> GetAsync(ExpenseFilterDto filter, CancellationToken cancellationToken)
     {
       return await DbSet
+        .Where(x => x.ProjectId == filter.ProjectId)
         .From(filter.From)
         .To(filter.To)
+        // Default order
+        .OrderByDescending(e => e.AddedUtc)
         .Skip(filter.Skip)
         .Take(filter.Count)
         .ProjectTo<ExpenseDto>(fMapper.ConfigurationProvider)
@@ -56,6 +59,36 @@ namespace Shamyr.Expendity.Server.Service.Repositories
         .From(filter.From)
         .To(filter.To)
         .LongCountAsync(cancellationToken);
+    }
+
+    public async Task<ExpenseDto?> UpdateAsync(int id, UpdateExpenseDto update, CancellationToken cancellationToken)
+    {
+      var entity = await DbSet
+        .Where(e => e.Id == id)
+        .SingleOrDefaultAsync(cancellationToken);
+
+      if (entity is null)
+        return null;
+
+      fMapper.Map(update, entity);
+      await fContext.SaveChangesAsync(cancellationToken);
+
+      return fMapper.Map<ExpenseEntity, ExpenseDto>(entity);
+    }
+
+    public async Task<ExpenseDto?> DeleteAsync(int id, CancellationToken cancellationToken)
+    {
+      var entity = await DbSet
+        .Where(e => e.Id == id)
+        .SingleOrDefaultAsync(cancellationToken);
+
+      if (entity is null)
+        return null;
+
+      DbSet.Remove(entity);
+      await fContext.SaveChangesAsync(cancellationToken);
+
+      return fMapper.Map<ExpenseEntity, ExpenseDto>(entity);
     }
   }
 }

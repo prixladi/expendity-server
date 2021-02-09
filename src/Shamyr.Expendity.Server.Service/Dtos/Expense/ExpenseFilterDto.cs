@@ -6,5 +6,6 @@ namespace Shamyr.Expendity.Server.Service.Dtos.Expense
   {
     public DateTime? From { get; init; }
     public DateTime? To { get; init; }
+    public int ProjectId { get; init; }
   }
 }

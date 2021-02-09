@@ -18,7 +18,7 @@ namespace Shamyr.Expendity.Server.Service.Repositories
 
     private IQueryable<ProjectPermissionEntity> NotDeletedSet => DbSet
       .Include(e => e.Project)
-      .Where(e => e.Project.Deleted == false);
+      .Where(e => !e.Project.Deleted);
 
     public async Task<ProjectDetailDto?> GetProjectAsync(int projectId, int userId, CancellationToken cancellationToken)
     {

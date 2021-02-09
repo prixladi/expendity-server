@@ -8,12 +8,12 @@ namespace Shamyr.Expendity.Server.Service.Requests.Project
   public class UpdateProjectRequest: IProjectPermission, IRequest<ProjectModel>
   {
     public int Id { get; }
-    public ProjectUpdateModel Model { get; }
+    public UpdateProjectModel Model { get; }
 
     int IProjectPermission.ProjectId => Id;
     PermissionType IProjectPermission.RequiredPermission => PermissionType.Own;
 
-    public UpdateProjectRequest(int id, ProjectUpdateModel model)
+    public UpdateProjectRequest(int id, UpdateProjectModel model)
     {
       Id = id;
       Model = model;

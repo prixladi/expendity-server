@@ -8,12 +8,12 @@ namespace Shamyr.Expendity.Server.Service.Requests.ExpenseType
   public class UpdateExpenseTypeRequest: IExpenseTypePermission, IRequest<ExpenseTypeModel>
   {
     public int Id { get; }
-    public ExpenseTypeUpdateModel Model { get; }
+    public UpdateExpenseTypeModel Model { get; }
 
     int IExpenseTypePermission.ExpenseTypeId => Id;
     PermissionType IExpenseTypePermission.RequiredPermission => PermissionType.Configure;
 
-    public UpdateExpenseTypeRequest(int id, ExpenseTypeUpdateModel model)
+    public UpdateExpenseTypeRequest(int id, UpdateExpenseTypeModel model)
     {
       Id = id;
       Model = model;

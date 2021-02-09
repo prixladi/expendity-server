@@ -16,7 +16,7 @@ namespace Shamyr.Expendity.Server.Service.Models
   }
 
   public class PaginationModelValidator<T>: AbstractValidator<T>
-    where T: PaginationModel
+    where T : PaginationModel
   {
     public PaginationModelValidator()
     {

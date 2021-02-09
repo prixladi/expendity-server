@@ -17,6 +17,7 @@ namespace Shamyr.Expendity.Server.Service.Repositories
     public async Task<SummaryDto> GetAsync(SummaryFilterDto filter, CancellationToken cancellationToken)
     {
       var entries = await DbSet
+        .Where(e => e.ProjectId == filter.ProjectId)
         .From(filter.From)
         .To(filter.To)
         .GroupBy(e => e.TypeId)

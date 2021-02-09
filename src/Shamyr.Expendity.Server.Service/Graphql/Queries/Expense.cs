@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Types;
 using Shamyr.Expendity.Server.Service.Models.Expense;
@@ -7,7 +6,7 @@ using Shamyr.Expendity.Server.Service.Requests.Expense;
 
 namespace Shamyr.Expendity.Server.Service.Graphql.Queries
 {
-  public class Expense: FieldBase<object, ExpenseModel>
+  public class Expense: OperationBase<object, ExpenseModel>
   {
     private const string _IdArgumentName = "id";
 
@@ -18,16 +17,9 @@ namespace Shamyr.Expendity.Server.Service.Graphql.Queries
       new QueryArgument<NonNullGraphType<IntGraphType>> { Name = _IdArgumentName, Description = "Id of the Expense" }
     };
 
-    private readonly IServiceProvider fServiceProvider;
-
-    public Expense(IServiceProvider serviceProvider)
-    {
-      fServiceProvider = serviceProvider;
-    }
-
     internal override async Task<ExpenseModel> ResolveAsync(IResolveFieldContext<object> context)
     {
-      using var scope = new Scope(fServiceProvider);
+      using var scope = new Scope(context.RequestServices);
       return await scope.Sender.Send(new ExpenseRequest(context.GetArgument<int>(_IdArgumentName)), context.CancellationToken);
     }
   }

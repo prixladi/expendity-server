@@ -1,8 +1,9 @@
-﻿using Shamyr.Expendity.Server.Service.Models.ExpenseType;
+﻿using GraphQL.Types;
+using Shamyr.Expendity.Server.Service.Models.ExpenseType;
 
 namespace Shamyr.Expendity.Server.Service.Graphql.Types.ExpenseType
 {
-  public class ExpenseTypeType: ObjectGraphTypeBase<ExpenseTypeModel>
+  public class ExpenseTypeType: ObjectGraphType<ExpenseTypeModel>
   {
     public ExpenseTypeType()
     {

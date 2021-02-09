@@ -7,12 +7,12 @@ namespace Shamyr.Expendity.Server.Service.Requests.ExpenseType
 {
   public class CreateExpenseTypeRequest: IProjectPermission, IRequest<ExpenseTypeModel>
   {
-    public NewExpenseTypeModel Model { get; }
+    public CreateExpenseTypeModel Model { get; }
 
     int IProjectPermission.ProjectId => Model.ProjectId;
     PermissionType IProjectPermission.RequiredPermission => PermissionType.Configure;
 
-    public CreateExpenseTypeRequest(NewExpenseTypeModel model)
+    public CreateExpenseTypeRequest(CreateExpenseTypeModel model)
     {
       Model = model;
     }

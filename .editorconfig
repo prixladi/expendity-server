@@ -148,3 +148,9 @@ dotnet_diagnostic.CA1822.severity = none
 
 # CA1063: Implement IDisposable Correctly
 dotnet_diagnostic.CA1063.severity = none
+
+# RCS1021: Convert lambda expression body to expression-body
+dotnet_diagnostic.RCS1090.severity = none
+
+# RCS1079: Throwing of new NotImplementedException
+dotnet_diagnostic.RCS1079.severity = none
