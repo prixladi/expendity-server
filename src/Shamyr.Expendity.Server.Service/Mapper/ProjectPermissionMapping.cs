@@ -13,12 +13,14 @@ namespace Shamyr.Expendity.Server.Service.Mapper
         .ForMember(dto => dto.Id, me => me.MapFrom(e => e.Project.Id))
         .ForMember(dto => dto.Name, me => me.MapFrom(e => e.Project.Name))
         .ForMember(dto => dto.Description, me => me.MapFrom(e => e.Project.Description))
+        .ForMember(dto => dto.CurrencyType, me => me.MapFrom(e => e.Project.CurrencyType))
         .ForMember(dto => dto.UserPermission, me => me.MapFrom(e => e.Type));
 
       exp.CreateMap<ProjectPermissionEntity, ProjectDetailDto>()
         .ForMember(dto => dto.Id, me => me.MapFrom(e => e.Project.Id))
         .ForMember(dto => dto.Name, me => me.MapFrom(e => e.Project.Name))
         .ForMember(dto => dto.Description, me => me.MapFrom(e => e.Project.Description))
+        .ForMember(dto => dto.CurrencyType, me => me.MapFrom(e => e.Project.CurrencyType))
         .ForMember(dto => dto.UserPermission, me => me.MapFrom(e => e.Type))
         .ForMember(dto => dto.Permissions, me => me.MapFrom(e => e.Project.Permissions))
         .ForMember(dto => dto.ExpenseTypes, me => me.MapFrom(e => e.Project.ExpenseTypes));

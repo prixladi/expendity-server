@@ -2,6 +2,6 @@
 {
   public static class RoleNames
   {
-    public const string _RemoteManagerService = "Remote Manager Service";
+    public const string _ExpendityService = "expendity-service";
   }
 }

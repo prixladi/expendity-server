@@ -7,9 +7,10 @@ namespace Shamyr.Expendity.Server.Service.Graphql.Types.Project
   {
     public ProjectType()
     {
-      Field(x => x.Id);
+      Field(x => x.Id, type: typeof(IdGraphType));
       Field(x => x.Name);
       Field(x => x.Description, nullable: true);
+      Field<NonNullGraphType<CurrencyTypeType>>(nameof(ProjectModel.CurrencyType));
       Field<NonNullGraphType<PermissionTypeType>>(nameof(ProjectModel.UserPermission), description: "Current user's permission for project.");
     }
   }

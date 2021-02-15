@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Shamyr.Expendity.Server.Service.Models.ExpenseType;
+using Shamyr.Expendity.Server.Service.Models.ProjectPermission;
 
 namespace Shamyr.Expendity.Server.Service.Models.Project
 {

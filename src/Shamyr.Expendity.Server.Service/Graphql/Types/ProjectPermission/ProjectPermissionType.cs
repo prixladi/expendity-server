@@ -1,7 +1,7 @@
 ﻿using GraphQL.Types;
-using Shamyr.Expendity.Server.Service.Models.Project;
+using Shamyr.Expendity.Server.Service.Models.ProjectPermission;
 
-namespace Shamyr.Expendity.Server.Service.Graphql.Types.Project
+namespace Shamyr.Expendity.Server.Service.Graphql.Types.ProjectPermission
 {
   public class ProjectPermissionType: ObjectGraphType<ProjectPermissionModel>
   {

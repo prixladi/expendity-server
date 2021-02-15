@@ -14,6 +14,9 @@ namespace Shamyr.Expendity.Server.Service.Models.Project
 
       RuleFor(x => x.Description)
         .MaximumLength(ValidationConstants._MaxDescriptionLength);
+
+      RuleFor(x => x.CurrencyType)
+        .IsInEnum();
     }
   }
 }

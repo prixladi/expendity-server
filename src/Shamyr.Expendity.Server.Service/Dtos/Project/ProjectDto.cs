@@ -7,6 +7,7 @@ namespace Shamyr.Expendity.Server.Service.Dtos.Project
     public int Id { get; init; }
     public string Name { get; init; } = default!;
     public string? Description { get; init; }
+    public CurrencyType CurrencyType { get; init; }
     public PermissionType UserPermission { get; set; }
   }
 }

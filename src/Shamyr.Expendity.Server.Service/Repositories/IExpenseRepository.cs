@@ -14,5 +14,6 @@ namespace Shamyr.Expendity.Server.Service.Repositories
     Task<ExpenseDto> GetAsync(int id, CancellationToken cancellationToken);
     Task<ExpenseDto?> UpdateAsync(int id, UpdateExpenseDto update, CancellationToken cancellationToken);
     Task<ExpenseDto?> DeleteAsync(int id, CancellationToken cancellationToken);
+    Task<long> ChangeCurrencyAsync(int projectId, decimal rate, CancellationToken cancellationToken);
   }
 }

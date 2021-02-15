@@ -7,5 +7,8 @@
     public const string _DbConnectionString = "DB_CONNECTION_STRING";
 
     public const string _AuthorityUrl = "AUTHORITY_URL";
+
+    public const string _ElasticUrl = "ELASTIC_URL";
+    public const string _LogLevel = "LOG_LEVEL";
   }
 }

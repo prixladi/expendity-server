@@ -3,6 +3,6 @@
   public class SummaryEntryModel
   {
     public int? ExpenseTypeId { get; init; }
-    public double Sum { get; init; }
+    public decimal Sum { get; init; }
   }
 }

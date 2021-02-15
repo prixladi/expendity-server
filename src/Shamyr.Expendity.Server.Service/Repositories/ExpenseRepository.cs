@@ -31,6 +31,12 @@ namespace Shamyr.Expendity.Server.Service.Repositories
       return fMapper.Map<ExpenseDto>(entity);
     }
 
+    public async Task<long> ChangeCurrencyAsync(int projectId, decimal rate, CancellationToken cancellationToken)
+    {
+      const string query = "Update expenses set value = value * {0} where project_id = {1}";
+      return await fContext.Database.ExecuteSqlRawAsync(query, new object[] { rate, projectId }, cancellationToken);
+    }
+
     public async Task<ICollection<ExpenseDto>> GetAsync(ExpenseFilterDto filter, CancellationToken cancellationToken)
     {
       return await DbSet

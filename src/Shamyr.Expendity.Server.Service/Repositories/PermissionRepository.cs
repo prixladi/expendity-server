@@ -25,6 +25,17 @@ namespace Shamyr.Expendity.Server.Service.Repositories
         .SingleOrDefaultAsync(cancellationToken);
     }
 
+    public async Task<UserPermissionDto[]> GetForPermissionAsync(int projectId, int userId, int currentUserId, CancellationToken cancellationToken)
+    {
+      return await fContext.Set<ProjectPermissionEntity>()
+        .Include(e => e.Project)
+        .Where(e => !e.Project.Deleted)
+        .Where(e => e.ProjectId == projectId)
+        .Where(e => e.UserId == userId || e.UserId == currentUserId)
+        .Select(e => new UserPermissionDto {  UserId = e.UserId, PermissionType = e.Type })
+        .ToArrayAsync(cancellationToken);
+    }
+
     public async Task<PermissionType?> GetForExpenseTypeAsync(int expenseTypeId, int userId, CancellationToken cancellationToken)
     {
       return await fContext.Set<ExpenseTypeEntity>()

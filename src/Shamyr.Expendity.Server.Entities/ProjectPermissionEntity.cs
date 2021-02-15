@@ -16,6 +16,7 @@ namespace Shamyr.Expendity.Server.Entities
     [Required]
     public int ProjectId { get; init; }
 
+    [Required]
     public PermissionType Type { get; init; }
 
     [ForeignKey(nameof(UserId))]

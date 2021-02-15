@@ -39,10 +39,26 @@ namespace Shamyr.Expendity.Server.Service.Repositories
       return new ProjectDto
       {
         Id = entity.Id,
-        Description = entity.Description,
         Name = entity.Name,
+        Description = entity.Description,
+        CurrencyType = entity.CurrencyType,
         UserPermission = PermissionType.Own
       };
+    }
+
+    // Returns old currency type
+    public async Task<CurrencyType> ChangeCurrencyAsync(int projectId, CurrencyType newCurrency, CancellationToken cancellationToken)
+    {
+      var entity = await  DbSet
+        .Where(e => e.Id == projectId)
+        .SingleOrDefaultAsync( cancellationToken);
+
+      var oldCurrency = entity.CurrencyType;
+
+      entity.CurrencyType = newCurrency;
+      await fContext.SaveChangesAsync(cancellationToken);
+
+      return oldCurrency;
     }
 
     public async Task<ProjectDto?> SetDeletedAsync(int id, CancellationToken cancellationToken)

@@ -2,11 +2,13 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shamyr.Expendity.Server.Service.Database;
 
 namespace Shamyr.Expendity.Server.Service.Migrations
 {
-  [DbContext(typeof(DatabaseContext))]
+    [DbContext(typeof(DatabaseContext))]
     partial class DatabaseContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -56,8 +58,8 @@ namespace Shamyr.Expendity.Server.Service.Migrations
                         .HasColumnType("int")
                         .HasColumnName("type_id");
 
-                    b.Property<double>("Value")
-                        .HasColumnType("float")
+                    b.Property<decimal>("Value")
+                        .HasColumnType("decimal(18,2)")
                         .HasColumnName("value");
 
                     b.HasKey("Id")
@@ -120,6 +122,10 @@ namespace Shamyr.Expendity.Server.Service.Migrations
                         .HasColumnType("int")
                         .HasColumnName("id")
                         .UseIdentityColumn();
+
+                    b.Property<int>("CurrencyType")
+                        .HasColumnType("int")
+                        .HasColumnName("currency_type");
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit")

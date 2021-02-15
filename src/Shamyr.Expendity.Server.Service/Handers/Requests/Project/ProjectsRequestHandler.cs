@@ -20,7 +20,7 @@ namespace Shamyr.Expendity.Server.Service.Handers.Requests.Project
       IProjectPermissionRepository projectPermissionRepository,
       IClaimsIdentityService claimsIdentityService,
       IMapper mapper)
-      : base(claimsIdentityService)
+       : base(claimsIdentityService)
     {
       fProjectPermissionRepository = projectPermissionRepository;
       fMapper = mapper;

@@ -7,6 +7,7 @@ FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 
 COPY src/Shamyr.Expendity.Server.Service/Shamyr.Expendity.Server.Service.csproj Shamyr.Expendity.Server.Service/
+COPY src/Shamyr.Expendity.Server.Entities/Shamyr.Expendity.Server.Entities.csproj Shamyr.Expendity.Server.Entities/
 
 COPY NuGet.config .
 
@@ -17,6 +18,7 @@ RUN dotnet restore --configfile /src/NuGet.config
 WORKDIR /src
 
 COPY src/Shamyr.Expendity.Server.Service/ Shamyr.Expendity.Server.Service/
+COPY src/Shamyr.Expendity.Server.Entities/ Shamyr.Expendity.Server.Entities/
 
 WORKDIR Shamyr.Expendity.Server.Service
 RUN dotnet build -c Release

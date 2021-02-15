@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using Shamyr.Cloud.Authority.Client.Authentication;
 using Shamyr.Expendity.Server.Service.Configs;
 using Shamyr.Expendity.Server.Service.Database;
@@ -14,9 +15,11 @@ namespace Shamyr.Expendity.Server.Service
   {
     public void ConfigureServices(IServiceCollection services)
     {
+      services.AddHttpClient();
+      services.AddExtensibleLogger();
+
       services.AddDbContext<DatabaseContext>(DbConfig.SetupDatabase);
 
-      services.AddApplicationInsights(ApplicationInsightsConfig.Setup);
       services.AddHttpContextAccessor();
 
       services.AddAutoMapper(MapperConfig.Configure, typeof(Startup));
@@ -38,6 +41,8 @@ namespace Shamyr.Expendity.Server.Service
 
     public void Configure(IApplicationBuilder app)
     {
+      app.UseSerilogRequestLogging(LoggingConfig.SetupRequests);
+
       app.UseAuthentication();
       app.UseAuthorization();
 

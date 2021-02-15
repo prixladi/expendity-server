@@ -14,7 +14,7 @@ namespace Shamyr.Expendity.Server.Entities
     public string Name { get; init; } = default!;
 
     [Required]
-    public double Value { get; init; }
+    public decimal Value { get; init; }
 
     [StringLength(ValidationConstants._MaxDescriptionLength, MinimumLength = 1)]
     public string? Description { get; init; }
@@ -24,8 +24,10 @@ namespace Shamyr.Expendity.Server.Entities
 
     public int? TypeId { get; init; }
 
+    [Required]
     public int ProjectId { get; init; }
 
+    [Required]
     public int CreatorUserId { get; init; }
 
     public int? LastUpdaterUserId { get; init; }

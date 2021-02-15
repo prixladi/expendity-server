@@ -16,6 +16,9 @@ namespace Shamyr.Expendity.Server.Entities
     public string? Description { get; init; }
 
     [Required]
+    public CurrencyType CurrencyType { get; set; }
+
+    [Required]
     public bool Deleted { get; set; }
 
     [InverseProperty(nameof(ProjectPermissionEntity.Project))]

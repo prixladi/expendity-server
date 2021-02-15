@@ -1,6 +1,6 @@
 ﻿using Shamyr.Expendity.Server.Entities;
 
-namespace Shamyr.Expendity.Server.Service.Models.Project
+namespace Shamyr.Expendity.Server.Service.Models.ProjectPermission
 {
   public class ProjectPermissionModel
   {

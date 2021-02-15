@@ -10,6 +10,7 @@ namespace Shamyr.Expendity.Server.Service.IoC
     public static void AddServiceAssembly(this IServiceCollection services)
     {
       services.AddHostedService<MigrationService>();
+      services.AddHostedService<ExchangeRatesHostedService>();
 
       using IScanner scanner = services.CreateScanner<Startup>();
       scanner.AddDefaultConventions();

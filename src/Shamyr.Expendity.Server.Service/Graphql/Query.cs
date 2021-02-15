@@ -1,10 +1,12 @@
 ﻿using GraphQL.Authorization;
 using GraphQL.Types;
 using Shamyr.Expendity.Server.Service.Graphql.Queries;
+using Shamyr.Expendity.Server.Service.Graphql.Types.ExchangeRate;
 using Shamyr.Expendity.Server.Service.Graphql.Types.Expense;
 using Shamyr.Expendity.Server.Service.Graphql.Types.ExpenseType;
 using Shamyr.Expendity.Server.Service.Graphql.Types.Project;
 using Shamyr.Expendity.Server.Service.Graphql.Types.Summary;
+using Shamyr.Expendity.Server.Service.Models.ExchangeRate;
 using Shamyr.Expendity.Server.Service.Models.Expense;
 using Shamyr.Expendity.Server.Service.Models.ExpenseType;
 using Shamyr.Expendity.Server.Service.Models.Project;
@@ -18,10 +20,13 @@ namespace Shamyr.Expendity.Server.Service.Graphql
     {
       Name = "Query";
 
-      Register<ProjectDetailType, ProjectDetailModel>(new Project())
+      Register<NonNullGraphType<ExchangeRatesType>, ExchangeRatesModel>(new ExchangeRates())
         .AuthorizeWith(Constants.Auth._Authenticated);
 
-      Register<ProjectsType, ProjectsModel>(new Projects())
+      Register<NonNullGraphType<ProjectDetailType>, ProjectDetailModel>(new Project())
+        .AuthorizeWith(Constants.Auth._Authenticated);
+
+      Register<NonNullGraphType<ProjectsType>, ProjectsModel>(new Projects())
         .AuthorizeWith(Constants.Auth._Authenticated);
 
       Register<NonNullGraphType<Types.Expense.ExpenseType>, ExpenseModel>(new Expense())

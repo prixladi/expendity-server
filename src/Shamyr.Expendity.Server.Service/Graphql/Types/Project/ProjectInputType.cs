@@ -9,6 +9,7 @@ namespace Shamyr.Expendity.Server.Service.Graphql.Types.Project
     {
       Field(x => x.Name);
       Field(x => x.Description, nullable: true);
+      Field<NonNullGraphType<CurrencyTypeType>>(nameof(CreateProjectModel.CurrencyType));
     }
   }
 }

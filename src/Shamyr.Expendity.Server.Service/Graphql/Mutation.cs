@@ -24,6 +24,9 @@ namespace Shamyr.Expendity.Server.Service.Graphql
       Register<NonNullGraphType<ProjectType>, ProjectModel>(new DeleteProject())
         .AuthorizeWith(Constants.Auth._Authenticated);
 
+      Register<NonNullGraphType<ProjectCurrencyChangedType>, ProjectCurrencyChangedModel>(new ChangeProjectCurrency())
+        .AuthorizeWith(Constants.Auth._Authenticated);
+
       Register<NonNullGraphType<ExpenseTypeType>, ExpenseTypeModel>(new CreateExpenseType())
         .AuthorizeWith(Constants.Auth._Authenticated);
 
