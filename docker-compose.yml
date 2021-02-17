@@ -16,7 +16,6 @@ services:
 
   authority:
     image: shamyr/cloud-authority
-    restart: always
     ports:
       - 8080:80
     environment:

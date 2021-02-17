@@ -32,7 +32,7 @@ namespace Shamyr.Expendity.Server.Service.Repositories
         .Where(e => !e.Project.Deleted)
         .Where(e => e.ProjectId == projectId)
         .Where(e => e.UserId == userId || e.UserId == currentUserId)
-        .Select(e => new UserPermissionDto {  UserId = e.UserId, PermissionType = e.Type })
+        .Select(e => new UserPermissionDto { UserId = e.UserId, PermissionType = e.Type })
         .ToArrayAsync(cancellationToken);
     }
 
@@ -63,6 +63,19 @@ namespace Shamyr.Expendity.Server.Service.Repositories
           UserId = p.UserId
         })
         .Where(dto => dto.UserId == userId)
+        .SingleOrDefaultAsync(cancellationToken);
+    }
+
+    public async Task<PermissionType?> GetForProjectInviteAsync(int projectInviteId, int userId, CancellationToken cancellationToken)
+    {
+      return await fContext.Set<ProjectInviteEntity>()
+        .Where(e => e.Id == projectInviteId)
+        .Include(e => e.Project)
+        .ThenInclude(e => e.Permissions)
+        .Where(e => !e.Project.Deleted)
+        .SelectMany(e => e.Project.Permissions)
+        .Where(e => e.UserId == userId)
+        .Select(e => (PermissionType?)e.Type)
         .SingleOrDefaultAsync(cancellationToken);
     }
   }

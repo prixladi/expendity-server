@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Shamyr.Expendity.Server.Entities;
 using Shamyr.Expendity.Server.Service.Models.Summary;
-using Shamyr.Expendity.Server.Service.Permissions;
+using Shamyr.Expendity.Server.Service.PermissionValidation;
 
 namespace Shamyr.Expendity.Server.Service.Requests.Summary
 {

@@ -1,5 +1,4 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Shamyr.Cloud.Authority.Client.Authentication;
@@ -23,7 +22,7 @@ namespace Shamyr.Expendity.Server.Service
       services.AddHttpContextAccessor();
 
       services.AddAutoMapper(MapperConfig.Configure, typeof(Startup));
-      services.AddMediatR(typeof(Startup));
+      services.AddMediator();
 
       services.AddAuthentication(options =>
       {

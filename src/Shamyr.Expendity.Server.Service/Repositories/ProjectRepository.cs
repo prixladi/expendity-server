@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Shamyr.Expendity.Server.Entities;
 using Shamyr.Expendity.Server.Service.Database;
 using Shamyr.Expendity.Server.Service.Dtos.Project;
+using Shamyr.Expendity.Server.Service.Dtos.ProjectPermission;
 
 namespace Shamyr.Expendity.Server.Service.Repositories
 {
@@ -13,6 +14,23 @@ namespace Shamyr.Expendity.Server.Service.Repositories
   {
     public ProjectRepository(DatabaseContext context, IMapper mapper)
       : base(context, mapper) { }
+
+    public async Task<ProjectWithPermissionTypeDto?> GetByProjectAndUserIdAsync(int id, int userId, CancellationToken cancellationToken)
+    {
+      return await DbSet
+        .Where(e => e.Id == id)
+        .Select(e => new
+        {
+          ProjectId = e.Id,
+          PermissionType = e.Permissions.SingleOrDefault(e => e.UserId == userId)
+        })
+        .Select(dto => new ProjectWithPermissionTypeDto
+        {
+          ProjectId = dto.ProjectId,
+          PermissionType = dto.PermissionType == null ? null : dto.PermissionType.Type
+        })
+        .SingleOrDefaultAsync(cancellationToken);
+    }
 
     public async Task<ProjectDto> CreateAsync(CreateProjectDto dto, int userId, CancellationToken cancellationToken)
     {
@@ -49,9 +67,9 @@ namespace Shamyr.Expendity.Server.Service.Repositories
     // Returns old currency type
     public async Task<CurrencyType> ChangeCurrencyAsync(int projectId, CurrencyType newCurrency, CancellationToken cancellationToken)
     {
-      var entity = await  DbSet
+      var entity = await DbSet
         .Where(e => e.Id == projectId)
-        .SingleOrDefaultAsync( cancellationToken);
+        .SingleOrDefaultAsync(cancellationToken);
 
       var oldCurrency = entity.CurrencyType;
 
@@ -79,7 +97,7 @@ namespace Shamyr.Expendity.Server.Service.Repositories
         Id = entity.Id,
         Description = entity.Description,
         Name = entity.Name,
-        // TODO: It will probably be allways own because no other person cound update it, but it should not rely on it
+        // TODO: It will probably be allways own because no other person could update it, but it should not rely on it
         UserPermission = PermissionType.Own
       };
     }

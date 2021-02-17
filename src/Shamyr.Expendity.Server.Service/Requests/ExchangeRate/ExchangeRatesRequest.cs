@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using MediatR;
+﻿using MediatR;
 using Shamyr.Expendity.Server.Service.Models.ExchangeRate;
 
 namespace Shamyr.Expendity.Server.Service.Requests.ExchangeRate

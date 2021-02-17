@@ -23,7 +23,7 @@ namespace Shamyr.Expendity.Server.Service.HostedServices
       var exchangeRatesRepository = provider.GetRequiredService<IExchangeRatesRepository>();
       var logger = provider.GetRequiredService<ILogger>();
 
-      var xml = await GetExchangeRatesXmlAsync(provider,cancellationToken);
+      var xml = await GetExchangeRatesXmlAsync(provider, cancellationToken);
       var exchangeRates = new ExchangeRates();
 
       foreach (var type in Enum.GetValues(typeof(CurrencyType)).Cast<CurrencyType>())

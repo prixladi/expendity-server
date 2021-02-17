@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Shamyr.Expendity.Server.Entities;
 using Shamyr.Expendity.Server.Service.Database;
 using Shamyr.Expendity.Server.Service.Dtos.Project;
+using Shamyr.Expendity.Server.Service.Dtos.ProjectPermission;
 
 namespace Shamyr.Expendity.Server.Service.Repositories
 {
@@ -19,6 +20,48 @@ namespace Shamyr.Expendity.Server.Service.Repositories
     private IQueryable<ProjectPermissionEntity> NotDeletedSet => DbSet
       .Include(e => e.Project)
       .Where(e => !e.Project.Deleted);
+
+    public async Task<ProjectPermissionDto?> CreateAsync(int projectId, int userId, PermissionType permissionType, CancellationToken cancellationToken)
+    {
+      var entity = new ProjectPermissionEntity
+      {
+        ProjectId = projectId,
+        UserId = userId,
+        Type = permissionType,
+        User = await fContext.Set<UserEntity>().SingleAsync(e => e.Id == userId, cancellationToken)
+      };
+
+      DbSet.Add(entity);
+      await fContext.SaveChangesAsync(cancellationToken);
+
+      return fMapper.Map<ProjectPermissionEntity, ProjectPermissionDto>(entity);
+    }
+
+    public async Task<ProjectPermissionDto?> UpdateAsync(int projectId, int userId, UpdateProjectPermissionDto dto, CancellationToken cancellationToken)
+    {
+      var entity = await DbSet
+        .Where(e => e.ProjectId == projectId)
+        .Where(e => e.UserId == userId)
+        .SingleOrDefaultAsync(cancellationToken);
+
+      fMapper.Map(dto, entity);
+      await fContext.SaveChangesAsync(cancellationToken);
+
+      return fMapper.Map<ProjectPermissionEntity, ProjectPermissionDto>(entity);
+    }
+
+    public async Task<ProjectPermissionDto?> DeleteAsync(int projectId, int userId, CancellationToken cancellationToken)
+    {
+      var entity = await DbSet
+        .Where(e => e.ProjectId == projectId)
+        .Where(e => e.UserId == userId)
+        .SingleOrDefaultAsync(cancellationToken);
+
+      DbSet.Remove(entity);
+      await fContext.SaveChangesAsync(cancellationToken);
+
+      return fMapper.Map<ProjectPermissionEntity, ProjectPermissionDto>(entity);
+    }
 
     public async Task<ProjectDetailDto?> GetProjectAsync(int projectId, int userId, CancellationToken cancellationToken)
     {

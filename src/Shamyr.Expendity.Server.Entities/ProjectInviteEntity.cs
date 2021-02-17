@@ -15,6 +15,7 @@ namespace Shamyr.Expendity.Server.Entities
     [StringLength(ValidationConstants._InviteTokenLength, MinimumLength = 1)]
     public string Token { get; init; } = default!;
 
+    // Permission that will user have after accepting this invite
     [Required]
     public PermissionType InvitePermission { get; init; }
 

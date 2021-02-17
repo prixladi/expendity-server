@@ -1,13 +1,17 @@
 ﻿using MediatR;
 using Shamyr.Expendity.Server.Entities;
 using Shamyr.Expendity.Server.Service.Models.Expense;
-using Shamyr.Expendity.Server.Service.Permissions;
+using Shamyr.Expendity.Server.Service.ModelValidation;
+using Shamyr.Expendity.Server.Service.PermissionValidation;
 
 namespace Shamyr.Expendity.Server.Service.Requests.Expense
 {
-  public class ExpensesRequest: IProjectPermission, IRequest<ExpensesModel>
+  public class ExpensesRequest:
+    Validable<ExpenseFilterModel, ExpenseFilterModelValidator>,
+    IProjectPermission,
+    IRequest<ExpensesModel>
   {
-    public ExpenseFilterModel Model { get; }
+    public override ExpenseFilterModel Model { get; }
 
     int IProjectPermission.ProjectId => Model.ProjectId;
     PermissionType IProjectPermission.RequiredPermission => PermissionType.View;

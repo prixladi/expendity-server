@@ -6,5 +6,6 @@ namespace Shamyr.Expendity.Server.Service.Models.ProjectInvite
   {
     public PermissionType ProjectPermissionType { get; init; }
     public bool IsMultiUse { get; init; }
+    public int ProjectId { get; init; }
   }
 }

@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using Shamyr.Expendity.Server.Entities;
 using Shamyr.Expendity.Server.Service.Dtos.Project;
-using Shamyr.Expendity.Server.Service.Models.Project;
+using Shamyr.Expendity.Server.Service.Dtos.ProjectPermission;
+using Shamyr.Expendity.Server.Service.Models.ProjectPermission;
 
 namespace Shamyr.Expendity.Server.Service.Mapper
 {
@@ -29,6 +30,10 @@ namespace Shamyr.Expendity.Server.Service.Mapper
         .ForMember(dto => dto.UserEmail, me => me.MapFrom(e => e.User.Email));
 
       exp.CreateMap<ProjectPermissionDto, ProjectPermissionModel>();
+
+      exp.CreateMap<UpdateProjectPermissionModel, UpdateProjectPermissionDto>();
+
+      exp.CreateMap<UpdateProjectPermissionDto, ProjectPermissionEntity>();
     }
   }
 }

@@ -23,7 +23,7 @@ namespace Shamyr.Expendity.Server.Service.Graphql.Mutations
     internal override async Task<ProjectModel> ResolveAsync(IResolveFieldContext<object> context)
     {
       var id = context.GetArgument<int>(_IdArgumentName);
-      var model = await context.GetArgumentAsync<UpdateProjectModel, UpdateProjectModelValidator>(_UpdateArgumentName, context.CancellationToken);
+      var model = context.GetArgument<UpdateProjectModel>(_UpdateArgumentName);
 
       using var scope = new Scope(context.RequestServices);
       return await scope.Sender.Send(new UpdateProjectRequest(id, model), context.CancellationToken);

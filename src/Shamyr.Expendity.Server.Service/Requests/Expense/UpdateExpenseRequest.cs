@@ -1,14 +1,18 @@
 ﻿using MediatR;
 using Shamyr.Expendity.Server.Entities;
 using Shamyr.Expendity.Server.Service.Models.Expense;
-using Shamyr.Expendity.Server.Service.Permissions;
+using Shamyr.Expendity.Server.Service.ModelValidation;
+using Shamyr.Expendity.Server.Service.PermissionValidation;
 
 namespace Shamyr.Expendity.Server.Service.Requests.Expense
 {
-  public class UpdateExpenseRequest: IExpensePermission, IRequest<ExpenseModel>
+  public class UpdateExpenseRequest:
+    Validable<UpdateExpenseModel, UpdateExpenseModelValidator>,
+    IExpensePermission,
+    IRequest<ExpenseModel>
   {
     public int Id { get; }
-    public UpdateExpenseModel Model { get; }
+    public override UpdateExpenseModel Model { get; }
 
     int IExpensePermission.ExpenseId => Id;
     PermissionType IExpensePermission.RequiredPermission => PermissionType.Configure;
