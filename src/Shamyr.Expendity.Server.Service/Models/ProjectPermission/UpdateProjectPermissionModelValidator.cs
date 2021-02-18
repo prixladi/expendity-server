@@ -6,7 +6,7 @@ namespace Shamyr.Expendity.Server.Service.Models.ProjectPermission
   {
     public UpdateProjectPermissionModelValidator()
     {
-      RuleFor(x => x.PermissionType)
+      RuleFor(x => x.Type)
         .IsInEnum();
     }
   }

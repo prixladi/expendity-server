@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography;
 using Shamyr.Expendity.Server.Entities;
 
 namespace Shamyr.Expendity.Server.Service

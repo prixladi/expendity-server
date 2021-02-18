@@ -46,6 +46,8 @@ namespace Shamyr.Expendity.Server.Service.Repositories
     {
       return await DbSet
         .Where(e => e.Token == token)
+        .Include(e => e.Project)
+        .Where(e => !e.Project.Deleted)
         .ProjectTo<ProjectInviteDto>(fMapper.ConfigurationProvider)
         .SingleOrDefaultAsync(cancellationToken);
     }

@@ -7,7 +7,7 @@ namespace Shamyr.Expendity.Server.Service.Graphql.Types.ProjectPermission
   {
     public ProjectPermissionUpdateInputType()
     {
-      Field<NonNullGraphType<PermissionTypeType>>(nameof(UpdateProjectPermissionModel.PermissionType));
+      Field<NonNullGraphType<PermissionTypeType>>(nameof(UpdateProjectPermissionModel.Type));
     }
   }
 }

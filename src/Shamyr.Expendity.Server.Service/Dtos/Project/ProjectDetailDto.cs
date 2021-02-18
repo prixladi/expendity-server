@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Shamyr.Expendity.Server.Service.Dtos.ExpenseType;
+using Shamyr.Expendity.Server.Service.Dtos.ProjectPermission;
 
 namespace Shamyr.Expendity.Server.Service.Dtos.Project
 {

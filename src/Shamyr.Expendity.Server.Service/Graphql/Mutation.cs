@@ -3,9 +3,13 @@ using GraphQL.Types;
 using Shamyr.Expendity.Server.Service.Graphql.Mutations;
 using Shamyr.Expendity.Server.Service.Graphql.Types.ExpenseType;
 using Shamyr.Expendity.Server.Service.Graphql.Types.Project;
+using Shamyr.Expendity.Server.Service.Graphql.Types.ProjectInvite;
+using Shamyr.Expendity.Server.Service.Graphql.Types.ProjectPermission;
 using Shamyr.Expendity.Server.Service.Models.Expense;
 using Shamyr.Expendity.Server.Service.Models.ExpenseType;
 using Shamyr.Expendity.Server.Service.Models.Project;
+using Shamyr.Expendity.Server.Service.Models.ProjectInvite;
+using Shamyr.Expendity.Server.Service.Models.ProjectPermission;
 
 namespace Shamyr.Expendity.Server.Service.Graphql
 {
@@ -15,35 +19,26 @@ namespace Shamyr.Expendity.Server.Service.Graphql
     {
       Name = "Mutation";
 
-      Register<NonNullGraphType<ProjectType>, ProjectModel>(new CreateProject())
-        .AuthorizeWith(Constants.Auth._Authenticated);
+      RegisterAuthenticated<NonNullGraphType<ProjectCurrencyChangedType>, ProjectCurrencyChangedModel>(new ChangeProjectCurrency());
 
-      Register<NonNullGraphType<ProjectType>, ProjectModel>(new UpdateProject())
-        .AuthorizeWith(Constants.Auth._Authenticated);
+      RegisterAuthenticated<NonNullGraphType<ProjectType>, ProjectModel>(new CreateProject());
+      RegisterAuthenticated<NonNullGraphType<ProjectType>, ProjectModel>(new UpdateProject());
+      RegisterAuthenticated<NonNullGraphType<ProjectType>, ProjectModel>(new DeleteProject());
 
-      Register<NonNullGraphType<ProjectType>, ProjectModel>(new DeleteProject())
-        .AuthorizeWith(Constants.Auth._Authenticated);
+      RegisterAuthenticated<NonNullGraphType<ExpenseTypeType>, ExpenseTypeModel>(new CreateExpenseType());
+      RegisterAuthenticated<NonNullGraphType<ExpenseTypeType>, ExpenseTypeModel>(new UpdateExpenseType());
+      RegisterAuthenticated<NonNullGraphType<ExpenseTypeType>, ExpenseTypeModel>(new DeleteExpenseType());
 
-      Register<NonNullGraphType<ProjectCurrencyChangedType>, ProjectCurrencyChangedModel>(new ChangeProjectCurrency())
-        .AuthorizeWith(Constants.Auth._Authenticated);
+      RegisterAuthenticated<NonNullGraphType<Types.Expense.ExpenseType>, ExpenseModel>(new CreateExpense());
+      RegisterAuthenticated<NonNullGraphType<Types.Expense.ExpenseType>, ExpenseModel>(new UpdateExpense());
+      RegisterAuthenticated<NonNullGraphType<Types.Expense.ExpenseType>, ExpenseModel>(new DeleteExpense());
 
-      Register<NonNullGraphType<ExpenseTypeType>, ExpenseTypeModel>(new CreateExpenseType())
-        .AuthorizeWith(Constants.Auth._Authenticated);
+      RegisterAuthenticated<NonNullGraphType<ProjectInviteType>, ProjectInviteModel>(new CreateProjectInvite());
+      RegisterAuthenticated<NonNullGraphType<ProjectInviteType>, ProjectInviteModel>(new DeleteProjectInvite());
+      RegisterAuthenticated<NonNullGraphType<ProjectPermissionType>, ProjectPermissionModel>(new AcceptProjectInvite());
 
-      Register<NonNullGraphType<ExpenseTypeType>, ExpenseTypeModel>(new UpdateExpenseType())
-        .AuthorizeWith(Constants.Auth._Authenticated);
-
-      Register<NonNullGraphType<ExpenseTypeType>, ExpenseTypeModel>(new DeleteExpenseType())
-        .AuthorizeWith(Constants.Auth._Authenticated);
-
-      Register<NonNullGraphType<Types.Expense.ExpenseType>, ExpenseModel>(new CreateExpense())
-        .AuthorizeWith(Constants.Auth._Authenticated);
-
-      Register<NonNullGraphType<Types.Expense.ExpenseType>, ExpenseModel>(new UpdateExpense())
-        .AuthorizeWith(Constants.Auth._Authenticated);
-
-      Register<NonNullGraphType<Types.Expense.ExpenseType>, ExpenseModel>(new DeleteExpense())
-        .AuthorizeWith(Constants.Auth._Authenticated);
+      RegisterAuthenticated<NonNullGraphType<ProjectPermissionType>, ProjectPermissionModel>(new UpdateProjectPermission());
+      RegisterAuthenticated<NonNullGraphType<ProjectPermissionType>, ProjectPermissionModel>(new DeleteProjectPermission());
     }
   }
 }

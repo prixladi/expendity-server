@@ -7,6 +7,6 @@ namespace Shamyr.Expendity.Server.Service.Models.ProjectPermission
     public int Id { get; init; }
     public PermissionType Type { get; init; }
     public int UserId { get; init; }
-    public string UserEmail { get; init; } = default!;
+    public string UserEmail { get; set; } = default!;
   }
 }

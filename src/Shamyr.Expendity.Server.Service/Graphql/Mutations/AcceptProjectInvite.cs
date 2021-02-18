@@ -14,7 +14,7 @@ namespace Shamyr.Expendity.Server.Service.Graphql.Mutations
 
     internal override QueryArguments? Arguments => new QueryArguments
     {
-      new QueryArgument<NonNullGraphType<IntGraphType>> { Name = _TokenArgumentName, Description = "Invite Token" }
+      new QueryArgument<NonNullGraphType<StringGraphType>> { Name = _TokenArgumentName, Description = "Invite Token" }
     };
 
     internal override async Task<ProjectPermissionModel> ResolveAsync(IResolveFieldContext<object> context)

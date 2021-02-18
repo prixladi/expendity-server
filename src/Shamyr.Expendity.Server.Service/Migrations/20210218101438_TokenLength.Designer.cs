@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shamyr.Expendity.Server.Service.Database;
 
 namespace Shamyr.Expendity.Server.Service.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210218101438_TokenLength")]
+    partial class TokenLength
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -156,6 +158,10 @@ namespace Shamyr.Expendity.Server.Service.Migrations
                         .HasColumnName("id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("InvitePermission")
+                        .HasColumnType("int")
+                        .HasColumnName("invite_permission");
+
                     b.Property<bool>("IsMultiUse")
                         .HasColumnType("bit")
                         .HasColumnName("is_multi_use");
@@ -163,10 +169,6 @@ namespace Shamyr.Expendity.Server.Service.Migrations
                     b.Property<int>("ProjectId")
                         .HasColumnType("int")
                         .HasColumnName("project_id");
-
-                    b.Property<int>("ProjectPermissionType")
-                        .HasColumnType("int")
-                        .HasColumnName("project_permission_type");
 
                     b.Property<string>("Token")
                         .IsRequired()

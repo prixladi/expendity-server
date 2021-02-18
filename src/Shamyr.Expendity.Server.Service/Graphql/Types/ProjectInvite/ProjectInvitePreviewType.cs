@@ -10,7 +10,7 @@ namespace Shamyr.Expendity.Server.Service.Graphql.Types.ProjectInvite
       Field(x => x.Id, type: typeof(IdGraphType));
       Field(x => x.ProjectId);
       Field(x => x.ProjectName);
-      Field(x => x.ProjectDescription);
+      Field(x => x.ProjectDescription, nullable: true);
       Field<NonNullGraphType<PermissionTypeType>>(nameof(ProjectInvitePreviewModel.ProjectPermissionType));
     }
   }

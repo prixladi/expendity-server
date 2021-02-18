@@ -8,6 +8,7 @@ namespace Shamyr.Expendity.Server.Service.Graphql.Types.ProjectInvite
     public ProjectInviteInputType()
     {
       Field(x => x.IsMultiUse);
+      Field(x => x.ProjectId);
       Field<NonNullGraphType<PermissionTypeType>>(nameof(CreateProjectInviteModel.ProjectPermissionType));
     }
   }

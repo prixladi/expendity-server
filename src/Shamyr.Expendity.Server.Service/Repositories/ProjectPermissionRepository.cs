@@ -21,20 +21,27 @@ namespace Shamyr.Expendity.Server.Service.Repositories
       .Include(e => e.Project)
       .Where(e => !e.Project.Deleted);
 
-    public async Task<ProjectPermissionDto?> CreateAsync(int projectId, int userId, PermissionType permissionType, CancellationToken cancellationToken)
+    public async Task<ProjectPermissionPreviewDto> CreateIfNotExistAsync(int projectId, int userId, PermissionType permissionType, CancellationToken cancellationToken)
     {
-      var entity = new ProjectPermissionEntity
+      var entity = await DbSet
+        .Where(e => e.ProjectId == projectId)
+        .Where(e => e.UserId == userId)
+        .SingleOrDefaultAsync(cancellationToken);
+
+      if (entity is null)
       {
-        ProjectId = projectId,
-        UserId = userId,
-        Type = permissionType,
-        User = await fContext.Set<UserEntity>().SingleAsync(e => e.Id == userId, cancellationToken)
-      };
+        entity = new ProjectPermissionEntity
+        {
+          ProjectId = projectId,
+          UserId = userId,
+          Type = permissionType
+        };
 
-      DbSet.Add(entity);
-      await fContext.SaveChangesAsync(cancellationToken);
+        DbSet.Add(entity);
+        await fContext.SaveChangesAsync(cancellationToken);
+      }
 
-      return fMapper.Map<ProjectPermissionEntity, ProjectPermissionDto>(entity);
+      return fMapper.Map<ProjectPermissionEntity, ProjectPermissionPreviewDto>(entity);
     }
 
     public async Task<ProjectPermissionDto?> UpdateAsync(int projectId, int userId, UpdateProjectPermissionDto dto, CancellationToken cancellationToken)

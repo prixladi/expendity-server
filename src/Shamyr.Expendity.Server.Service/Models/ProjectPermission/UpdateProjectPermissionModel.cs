@@ -4,6 +4,6 @@ namespace Shamyr.Expendity.Server.Service.Models.ProjectPermission
 {
   public class UpdateProjectPermissionModel
   {
-    public PermissionType PermissionType { get; init; }
+    public PermissionType Type { get; init; }
   }
 }

@@ -29,6 +29,11 @@ namespace Shamyr.Expendity.Server.Service.Mapper
       exp.CreateMap<ProjectPermissionEntity, ProjectPermissionDto>()
         .ForMember(dto => dto.UserEmail, me => me.MapFrom(e => e.User.Email));
 
+      exp.CreateMap<ProjectPermissionEntity, ProjectPermissionPreviewDto>();
+
+      // Needs aftermap set user email
+      exp.CreateMap<ProjectPermissionPreviewDto, ProjectPermissionModel>();
+
       exp.CreateMap<ProjectPermissionDto, ProjectPermissionModel>();
 
       exp.CreateMap<UpdateProjectPermissionModel, UpdateProjectPermissionDto>();

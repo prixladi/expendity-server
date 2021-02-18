@@ -7,7 +7,7 @@ namespace Shamyr.Expendity.Server.Service.Graphql.Queries
 {
   public class Me: OperationBase<object, MeModel>
   {
-    internal override string Name => "name";
+    internal override string Name => "me";
 
     internal override async Task<MeModel> ResolveAsync(IResolveFieldContext<object> context)
     {

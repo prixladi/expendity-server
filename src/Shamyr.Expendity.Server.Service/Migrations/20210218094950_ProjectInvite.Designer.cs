@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shamyr.Expendity.Server.Service.Database;
 
 namespace Shamyr.Expendity.Server.Service.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210218094950_ProjectInvite")]
+    partial class ProjectInvite
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -156,6 +158,10 @@ namespace Shamyr.Expendity.Server.Service.Migrations
                         .HasColumnName("id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("InvitePermission")
+                        .HasColumnType("int")
+                        .HasColumnName("invite_permission");
+
                     b.Property<bool>("IsMultiUse")
                         .HasColumnType("bit")
                         .HasColumnName("is_multi_use");
@@ -164,14 +170,10 @@ namespace Shamyr.Expendity.Server.Service.Migrations
                         .HasColumnType("int")
                         .HasColumnName("project_id");
 
-                    b.Property<int>("ProjectPermissionType")
-                        .HasColumnType("int")
-                        .HasColumnName("project_permission_type");
-
                     b.Property<string>("Token")
                         .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)")
                         .HasColumnName("token");
 
                     b.HasKey("Id")

@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Shamyr.Cloud.Authority.Client.Services;
 using Shamyr.Expendity.Server.Service.Graphql.Exceptions;
+using Shamyr.Expendity.Server.Service.PermissionValidation;
 using Shamyr.Expendity.Server.Service.Repositories;
 
 namespace Shamyr.Expendity.Server.Service.Handers.PermissionValidation
@@ -21,6 +22,8 @@ namespace Shamyr.Expendity.Server.Service.Handers.PermissionValidation
     protected override async Task DoHandleAsync(IProjectPermissionsPermission request, CancellationToken cancellationToken)
     {
       var identity = fClaimsIdentityService.GetCurrentUser<UserIdentity>();
+      if (request.UserId == identity.Id)
+        throw new BadRequestException("Users can't change their own permissions.");
 
       var permissions = await fPermissionRepository.GetForPermissionAsync(request.ProjectId, request.UserId, identity.Id, cancellationToken);
       // Either current user or manipulated user doesn't have permissions for current project or project doesn't exist

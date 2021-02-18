@@ -1,15 +1,18 @@
-﻿using GraphQL.Authorization;
-using GraphQL.Types;
+﻿using GraphQL.Types;
 using Shamyr.Expendity.Server.Service.Graphql.Queries;
+using Shamyr.Expendity.Server.Service.Graphql.Types;
 using Shamyr.Expendity.Server.Service.Graphql.Types.ExchangeRate;
 using Shamyr.Expendity.Server.Service.Graphql.Types.Expense;
 using Shamyr.Expendity.Server.Service.Graphql.Types.ExpenseType;
 using Shamyr.Expendity.Server.Service.Graphql.Types.Project;
+using Shamyr.Expendity.Server.Service.Graphql.Types.ProjectInvite;
 using Shamyr.Expendity.Server.Service.Graphql.Types.Summary;
+using Shamyr.Expendity.Server.Service.Models;
 using Shamyr.Expendity.Server.Service.Models.ExchangeRate;
 using Shamyr.Expendity.Server.Service.Models.Expense;
 using Shamyr.Expendity.Server.Service.Models.ExpenseType;
 using Shamyr.Expendity.Server.Service.Models.Project;
+using Shamyr.Expendity.Server.Service.Models.ProjectInvite;
 using Shamyr.Expendity.Server.Service.Models.Summary;
 
 namespace Shamyr.Expendity.Server.Service.Graphql
@@ -20,26 +23,23 @@ namespace Shamyr.Expendity.Server.Service.Graphql
     {
       Name = "Query";
 
-      Register<NonNullGraphType<ExchangeRatesType>, ExchangeRatesModel>(new ExchangeRates())
-        .AuthorizeWith(Constants.Auth._Authenticated);
+      RegisterAuthenticated<NonNullGraphType<MeType>, MeModel>(new Me());
 
-      Register<NonNullGraphType<ProjectDetailType>, ProjectDetailModel>(new Project())
-        .AuthorizeWith(Constants.Auth._Authenticated);
+      RegisterAuthenticated<NonNullGraphType<ExchangeRatesType>, ExchangeRatesModel>(new ExchangeRates());
 
-      Register<NonNullGraphType<ProjectsType>, ProjectsModel>(new Projects())
-        .AuthorizeWith(Constants.Auth._Authenticated);
+      RegisterAuthenticated<NonNullGraphType<ProjectDetailType>, ProjectDetailModel>(new Project());
+      RegisterAuthenticated<NonNullGraphType<ProjectsType>, ProjectsModel>(new Projects());
 
-      Register<NonNullGraphType<Types.Expense.ExpenseType>, ExpenseModel>(new Expense())
-        .AuthorizeWith(Constants.Auth._Authenticated);
+      RegisterAuthenticated<NonNullGraphType<Types.Expense.ExpenseType>, ExpenseModel>(new Expense());
+      RegisterAuthenticated<NonNullGraphType<ExpensesType>, ExpensesModel>(new Expenses());
 
-      Register<NonNullGraphType<ExpensesType>, ExpensesModel>(new Expenses())
-        .AuthorizeWith(Constants.Auth._Authenticated);
+      RegisterAuthenticated<NonNullGraphType<ExpenseTypeType>, ExpenseTypeModel>(new Queries.ExpenseType());
 
-      Register<NonNullGraphType<ExpenseTypeType>, ExpenseTypeModel>(new Queries.ExpenseType())
-        .AuthorizeWith(Constants.Auth._Authenticated);
+      RegisterAuthenticated<NonNullGraphType<SummaryType>, SummaryModel>(new Summary());
 
-      Register<NonNullGraphType<SummaryType>, SummaryModel>(new Summary())
-        .AuthorizeWith(Constants.Auth._Authenticated);
+      RegisterAuthenticated<NonNullGraphType<ProjectInviteType>, ProjectInviteModel>(new ProjectInvite());
+      RegisterAuthenticated<NonNullGraphType<ProjectInvitePreviewType>, ProjectInvitePreviewModel>(new ProjectInviteByToken());
+      RegisterAuthenticated<NonNullGraphType<ProjectInvitesType>, ProjectInvitesModel>(new ProjectInvites());
     }
   }
 }

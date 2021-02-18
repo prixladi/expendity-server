@@ -10,11 +10,11 @@ namespace Shamyr.Expendity.Server.Service.Graphql.Queries
   {
     private const string _TokenArgumentName = "token";
 
-    internal override string Name => "projectInvite";
+    internal override string Name => "projectInviteByToken";
 
     internal override QueryArguments? Arguments => new QueryArguments
     {
-      new QueryArgument<NonNullGraphType<IntGraphType>> { Name = _TokenArgumentName, Description = "Invite Token" }
+      new QueryArgument<NonNullGraphType<StringGraphType>> { Name = _TokenArgumentName, Description = "Invite Token" }
     };
 
     internal override async Task<ProjectInvitePreviewModel> ResolveAsync(IResolveFieldContext<object> context)

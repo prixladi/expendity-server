@@ -17,7 +17,7 @@ namespace Shamyr.Expendity.Server.Service.Requests.ProjectPermissions
 
     int IProjectPermissionsPermission.ProjectId => ProjectId;
     int IProjectPermissionsPermission.UserId => UserId;
-    PermissionType IProjectPermissionsPermission.RequiredPermission => Utils.MaxPermission(PermissionType.Configure, Model.PermissionType);
+    PermissionType IProjectPermissionsPermission.RequiredPermission => Utils.MaxPermission(PermissionType.Configure, Model.Type);
 
     public UpdateProjectPermissionRequest(int projectId, int userId, UpdateProjectPermissionModel model)
     {

@@ -24,7 +24,7 @@ namespace Shamyr.Expendity.Server.Service.Handers.Requests.ProjectInvite
 
     public async Task<ProjectInviteModel> Handle(CreateProjectInviteRequest request, CancellationToken cancellationToken)
     {
-      var token = SecurityUtils.GetUrlToken(ValidationConstants._InviteTokenLength);
+      var token = SecurityUtils.GetUrlToken(ValidationConstants._InviteTokenMaxLength / 2);
       var projectInvite = fMapper.Map<CreateProjectInviteModel, CreateProjectInviteDto>(request.Model, 
         opt => opt.AfterMap((_, dto) => dto.Token = token));
 

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Shamyr.Cloud.Authority.Client.Services;
 using Shamyr.Expendity.Server.Service.Graphql.Exceptions;
+using Shamyr.Expendity.Server.Service.PermissionValidation;
 using Shamyr.Expendity.Server.Service.Repositories;
 
 namespace Shamyr.Expendity.Server.Service.Handers.PermissionValidation

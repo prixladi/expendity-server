@@ -12,12 +12,12 @@ namespace Shamyr.Expendity.Server.Entities
     public int ProjectId { get; init; }
 
     [Required]
-    [StringLength(ValidationConstants._InviteTokenLength, MinimumLength = 1)]
+    [StringLength(ValidationConstants._InviteTokenMaxLength, MinimumLength = 1)]
     public string Token { get; init; } = default!;
 
     // Permission that will user have after accepting this invite
     [Required]
-    public PermissionType InvitePermission { get; init; }
+    public PermissionType ProjectPermissionType { get; init; }
 
     [Required]
     public bool IsMultiUse { get; init; }
