@@ -23,6 +23,6 @@ namespace Shamyr.Expendity.Server.Entities
     public string? FamilyName { get; init; }
 
     [InverseProperty(nameof(ProjectPermissionEntity.User))]
-    public ICollection<ProjectPermissionEntity> ProjectPermissions { get; set; } = Array.Empty<ProjectPermissionEntity>();
+    public ICollection<ProjectPermissionEntity> ProjectPermissions { get; set; } = default!;
   }
 }

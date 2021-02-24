@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using GraphQL.Server.Common;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Shamyr.Cloud.Authority.Client.Authentication;
@@ -7,13 +8,15 @@ using Shamyr.Expendity.Server.Service.Database;
 using Shamyr.Expendity.Server.Service.Factories;
 using Shamyr.Expendity.Server.Service.Graphql;
 using Shamyr.Expendity.Server.Service.IoC;
+using Shamyr.Expendity.Server.Service.Middleware;
 
 namespace Shamyr.Expendity.Server.Service
 {
-  public sealed class Startup
+  public sealed partial class Startup
   {
     public void ConfigureServices(IServiceCollection services)
     {
+      services.AddCors();
       services.AddHttpClient();
       services.AddExtensibleLogger();
 
@@ -33,7 +36,7 @@ namespace Shamyr.Expendity.Server.Service
 
       services.AddAuthorization();
 
-      services.AddGraphQLSchema();
+      services.AddGraphQLSchema(GraphQLConfig.ExposeStackTrace);
 
       services.AddServiceAssembly();
     }
@@ -42,10 +45,12 @@ namespace Shamyr.Expendity.Server.Service
     {
       app.UseSerilogRequestLogging(LoggingConfig.SetupRequests);
 
+      app.UseCors(CorsConfig.Setup);
+
       app.UseAuthentication();
       app.UseAuthorization();
 
-      app.UseGraphQL<ISchemaRoot>(GraphQLConfig.Endpoint);
+      app.UseGraphQL<ISchemaRoot, GraphqlLoggingMiddleware>(GraphQLConfig.Endpoint);
       app.UseGraphQLPlayground(GraphQLConfig.PlaygroundOptions);
     }
   }

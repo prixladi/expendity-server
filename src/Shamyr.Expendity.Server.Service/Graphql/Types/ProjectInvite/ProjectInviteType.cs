@@ -7,7 +7,7 @@ namespace Shamyr.Expendity.Server.Service.Graphql.Types.ProjectInvite
   {
     public ProjectInviteType()
     {
-      Field(x => x.Id, type: typeof(IdGraphType));
+      Field(x => x.Id, type: typeof(NonNullGraphType<IdGraphType>));
       Field(x => x.IsMultiUse);
       Field(x => x.ProjectId);
       Field(x => x.Token);

@@ -12,7 +12,7 @@ namespace Shamyr.Expendity.Server.Service.Models.Expense
     public int? TypeId { get; init; }
     public int ProjectId { get; init; }
     public int CreatorUserId { get; init; }
-    public string CreatorUserEmail { get; init; } = default!;
+    public string CreatorUserEmail { get; set; } = default!;
     public int? LastUpdaterUserId { get; init; }
     public string? LastUpdaterUserEmail { get; init; }
   }

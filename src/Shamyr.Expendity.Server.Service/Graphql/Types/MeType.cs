@@ -10,7 +10,7 @@ namespace Shamyr.Expendity.Server.Service.Graphql.Types
       Field(x => x.Id);
       Field(x => x.SubjectId);
       Field(x => x.Email);
-      Field(x => x.Username);
+      Field(x => x.Username, nullable: true);
     }
   }
 }

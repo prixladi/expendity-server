@@ -62,6 +62,7 @@ namespace Shamyr.Expendity.Server.Service.Repositories
     public async Task<long> CountAsync(ExpenseFilterDto filter, CancellationToken cancellationToken)
     {
       return await DbSet
+        .Where(x => x.ProjectId == filter.ProjectId)
         .From(filter.From)
         .To(filter.To)
         .LongCountAsync(cancellationToken);

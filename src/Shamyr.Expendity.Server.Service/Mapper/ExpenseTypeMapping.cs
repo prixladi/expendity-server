@@ -14,6 +14,9 @@ namespace Shamyr.Expendity.Server.Service.Mapper
 
       exp.CreateMap<CreateExpenseTypeModel, CreateExpenseTypeDto>();
       exp.CreateMap<CreateExpenseTypeDto, ExpenseTypeEntity>();
+
+      exp.CreateMap<UpdateExpenseTypeModel, UpdateExpenseTypeDto>();
+      exp.CreateMap<UpdateExpenseTypeDto, ExpenseTypeEntity>();
     }
   }
 }

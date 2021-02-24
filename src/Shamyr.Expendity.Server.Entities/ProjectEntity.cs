@@ -25,6 +25,6 @@ namespace Shamyr.Expendity.Server.Entities
     public List<ProjectPermissionEntity> Permissions { get; init; } = new List<ProjectPermissionEntity>(1);
 
     [InverseProperty(nameof(ExpenseTypeEntity.Project))]
-    public ICollection<ExpenseTypeEntity> ExpenseTypes { get; init; } = Array.Empty<ExpenseTypeEntity>();
+    public ICollection<ExpenseTypeEntity> ExpenseTypes { get; init; } = new List<ExpenseTypeEntity>();
   }
 }

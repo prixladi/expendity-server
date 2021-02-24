@@ -8,5 +8,6 @@ namespace Shamyr.Expendity.Server.Service.Dtos.ProjectPermission
     public PermissionType Type { get; init; }
     public int UserId { get; init; }
     public string UserEmail { get; init; } = default!;
+    public int ProjectId { get; set; } = default!;
   }
 }

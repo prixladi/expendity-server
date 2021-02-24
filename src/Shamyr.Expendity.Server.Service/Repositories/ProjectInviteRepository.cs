@@ -28,8 +28,6 @@ namespace Shamyr.Expendity.Server.Service.Repositories
     {
       return await DbSet
         .Where(e => e.ProjectId == dto.ProjectId)
-        .Skip(dto.Skip)
-        .Take(dto.Count)
         .ProjectTo<ProjectInviteDto>(fMapper.ConfigurationProvider)
         .ToArrayAsync(cancellationToken);
     }

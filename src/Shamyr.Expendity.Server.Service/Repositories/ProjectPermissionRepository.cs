@@ -21,7 +21,7 @@ namespace Shamyr.Expendity.Server.Service.Repositories
       .Include(e => e.Project)
       .Where(e => !e.Project.Deleted);
 
-    public async Task<ProjectPermissionPreviewDto> CreateIfNotExistAsync(int projectId, int userId, PermissionType permissionType, CancellationToken cancellationToken)
+    public async Task<ProjectPermissionDto> CreateOrUpdateAsync(int projectId, int userId, PermissionType permissionType, CancellationToken cancellationToken)
     {
       var entity = await DbSet
         .Where(e => e.ProjectId == projectId)
@@ -40,8 +40,13 @@ namespace Shamyr.Expendity.Server.Service.Repositories
         DbSet.Add(entity);
         await fContext.SaveChangesAsync(cancellationToken);
       }
+      else if (permissionType > entity.Type)
+      {
+        entity.Type = permissionType;
+        await fContext.SaveChangesAsync(cancellationToken);
+      }
 
-      return fMapper.Map<ProjectPermissionEntity, ProjectPermissionPreviewDto>(entity);
+      return fMapper.Map<ProjectPermissionEntity, ProjectPermissionDto>(entity);
     }
 
     public async Task<ProjectPermissionDto?> UpdateAsync(int projectId, int userId, UpdateProjectPermissionDto dto, CancellationToken cancellationToken)
@@ -49,6 +54,7 @@ namespace Shamyr.Expendity.Server.Service.Repositories
       var entity = await DbSet
         .Where(e => e.ProjectId == projectId)
         .Where(e => e.UserId == userId)
+        .Include(e => e.User)
         .SingleOrDefaultAsync(cancellationToken);
 
       fMapper.Map(dto, entity);
@@ -62,6 +68,7 @@ namespace Shamyr.Expendity.Server.Service.Repositories
       var entity = await DbSet
         .Where(e => e.ProjectId == projectId)
         .Where(e => e.UserId == userId)
+        .Include(e => e.User)
         .SingleOrDefaultAsync(cancellationToken);
 
       DbSet.Remove(entity);
@@ -83,9 +90,10 @@ namespace Shamyr.Expendity.Server.Service.Repositories
     {
       return await NotDeletedSet
         .Where(e => e.UserId == userId)
+        .OrderByDescending(e => e.Type)
         .Skip(filter.Skip)
         .Take(filter.Count)
-        .ProjectTo<ProjectDetailDto>(fMapper.ConfigurationProvider)
+        .ProjectTo<ProjectDto>(fMapper.ConfigurationProvider)
         .ToArrayAsync(cancellationToken);
     }
 

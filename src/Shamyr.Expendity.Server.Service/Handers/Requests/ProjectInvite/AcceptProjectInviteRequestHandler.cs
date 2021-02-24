@@ -44,7 +44,7 @@ namespace Shamyr.Expendity.Server.Service.Handers.Requests.ProjectInvite
         if (invite is null)
           throw new NotFoundCodeException($"Project Invite with Token '{request.Token}' was not found.");
 
-        var permission = await fProjectPermissionRepository.CreateIfNotExistAsync(
+        var permission = await fProjectPermissionRepository.CreateOrUpdateAsync(
           invite.ProjectId, identity.Id, invite.ProjectPermissionType, cancellationToken);
 
         if (!invite.IsMultiUse)
@@ -54,7 +54,7 @@ namespace Shamyr.Expendity.Server.Service.Handers.Requests.ProjectInvite
       }, cancellationToken);
 
       // TODO: Find better solution instead of the AfterMap
-      return fMapper.Map<ProjectPermissionPreviewDto, ProjectPermissionModel>(
+      return fMapper.Map<ProjectPermissionDto, ProjectPermissionModel>(
         dto, opt => opt.AfterMap((_, model) => model.UserEmail = identity.Email));
     }
   }

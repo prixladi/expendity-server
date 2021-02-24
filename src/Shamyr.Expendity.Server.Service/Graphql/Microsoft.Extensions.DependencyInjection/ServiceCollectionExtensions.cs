@@ -10,16 +10,14 @@ namespace Microsoft.Extensions.DependencyInjection
 {
   public static partial class ServiceCollectionExtensions
   {
-    public static void AddGraphQLSchema(this IServiceCollection services)
+    public static void AddGraphQLSchema(this IServiceCollection services, bool exposeStackTrace)
     {
-      services.AddGraphQL(options => options.EnableMetrics = true)
+      var builder = services.AddGraphQL(options => options.EnableMetrics = true)
       .AddUserContextBuilder(context => new UserContext(context.User))
-      .AddSystemTextJson()
-#if DEBUG
-      .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true);
-#else
-      .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = false);
-#endif
+      .AddSystemTextJson();
+
+      if (exposeStackTrace)
+        builder.AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true);
 
       services.AddSingleton<ISchemaRoot, SchemaRoot>();
       services.AddSingleton<IQuery, Query>();

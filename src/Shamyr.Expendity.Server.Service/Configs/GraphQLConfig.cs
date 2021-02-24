@@ -12,5 +12,17 @@ namespace Shamyr.Expendity.Server.Service.Configs
       Path = "/ui/playground",
       SchemaPollingInterval = 50000
     };
+
+    public static bool ExposeStackTrace
+    {
+      get
+      {
+        var expose = EnvVariable.TryGet(EnvVariables._GraphqlExposeStackTrace);
+        if (bool.TryParse(expose, out var exp))
+          return exp;
+
+        return false;
+      }
+    }
   }
 }

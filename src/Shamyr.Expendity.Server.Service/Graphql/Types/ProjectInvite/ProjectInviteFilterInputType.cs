@@ -7,8 +7,6 @@ namespace Shamyr.Expendity.Server.Service.Graphql.Types.ProjectInvite
   {
     public ProjectInviteFilterInputType()
     {
-      Field(x => x.Count);
-      Field(x => x.Skip);
       Field(x => x.ProjectId);
     }
   }

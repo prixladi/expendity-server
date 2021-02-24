@@ -31,11 +31,11 @@ namespace Shamyr.Expendity.Server.Service.Handers.Requests.Expense
 
     public async Task<ExpenseModel> Handle(CreateExpenseRequest request, CancellationToken cancellationToken)
     {
-      if (
-        request.Model.TypeId is not null &&
-        !await fExpenseTypeRepository.ExistsAsync(request.Model.TypeId.Value, cancellationToken))
+      if (request.Model.TypeId is not null)
       {
-        throw new BadRequestCodeException($"Expense type with ID '{request.Model.TypeId}' does not exist.");
+        var projectId = await fExpenseTypeRepository.GetProjectIdAsync(request.Model.TypeId.Value, cancellationToken);
+        if (projectId == null || projectId.Value != request.Model.ProjectId)
+          throw new BadRequestCodeException($"Expense type with ID '{request.Model.TypeId}' does not exist or does not belong to project '{request.Model.ProjectId}'.");
       }
 
       var dto = fMapper.Map<CreateExpenseModel, CreateExpenseDto>(request.Model,
@@ -43,7 +43,8 @@ namespace Shamyr.Expendity.Server.Service.Handers.Requests.Expense
 
       var detail = await fExpenseRepository.CreateAsync(dto, cancellationToken);
 
-      return fMapper.Map<ExpenseDto, ExpenseModel>(detail);
+      return fMapper.Map<ExpenseDto, ExpenseModel>(detail, 
+        opt => opt.AfterMap((_, dto) => dto.CreatorUserEmail = GetIdentity().Email));
     }
   }
 }

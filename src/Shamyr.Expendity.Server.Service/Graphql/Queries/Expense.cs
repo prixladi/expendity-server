@@ -14,7 +14,7 @@ namespace Shamyr.Expendity.Server.Service.Graphql.Queries
 
     internal override QueryArguments? Arguments => new QueryArguments
     {
-      new QueryArgument<NonNullGraphType<IntGraphType>> { Name = _IdArgumentName, Description = "Id of the Expense" }
+      new QueryArgument<NonNullGraphType<IdGraphType>> { Name = _IdArgumentName, Description = "Id of the Expense" }
     };
 
     internal override async Task<ExpenseModel> ResolveAsync(IResolveFieldContext<object> context)

@@ -97,6 +97,7 @@ namespace Shamyr.Expendity.Server.Service.Repositories
         Id = entity.Id,
         Description = entity.Description,
         Name = entity.Name,
+        CurrencyType = entity.CurrencyType,
         // TODO: It will probably be allways own because no other person could update it, but it should not rely on it
         UserPermission = PermissionType.Own
       };
@@ -120,6 +121,7 @@ namespace Shamyr.Expendity.Server.Service.Repositories
         Id = entity.Id,
         Description = entity.Description,
         Name = entity.Name,
+        CurrencyType = entity.CurrencyType,
         // TODO: It will probably be allways own because no other person cound update it, but it should not rely on it
         UserPermission = PermissionType.Own
       };

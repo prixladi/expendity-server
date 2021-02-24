@@ -17,8 +17,8 @@ namespace Shamyr.Expendity.Server.Service.Graphql.Mutations
 
     internal override QueryArguments? Arguments => new QueryArguments
     {
-      new QueryArgument<NonNullGraphType<IntGraphType>> { Name = _ProjectIdArgumentName, Description = "Id of the Project" },
-      new QueryArgument<NonNullGraphType<IntGraphType>> { Name = _UserIdArgumentName, Description = "Id of the User" },
+      new QueryArgument<NonNullGraphType<IdGraphType>> { Name = _ProjectIdArgumentName, Description = "Id of the Project" },
+      new QueryArgument<NonNullGraphType<IdGraphType>> { Name = _UserIdArgumentName, Description = "Id of the User" },
       new QueryArgument<NonNullGraphType<ProjectPermissionUpdateInputType>> { Name = _UpdateArgumentName }
     };
 

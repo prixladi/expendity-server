@@ -8,6 +8,7 @@ using Shamyr.Expendity.Server.Service.Graphql.Exceptions;
 using Shamyr.Expendity.Server.Service.Models.Expense;
 using Shamyr.Expendity.Server.Service.Repositories;
 using Shamyr.Expendity.Server.Service.Requests.Expense;
+using Shamyr.Expendity.Server.Service.Services;
 
 namespace Shamyr.Expendity.Server.Service.Handers.Requests.Expense
 {
@@ -15,37 +16,47 @@ namespace Shamyr.Expendity.Server.Service.Handers.Requests.Expense
   {
     private readonly IExpenseTypeRepository fExpenseTypeRepository;
     private readonly IExpenseRepository fExpenseRepository;
+    private readonly IDbTransactionService fDbTransactionService;
     private readonly IMapper fMapper;
 
     public UpdateExpenseRequestHandler(
       IClaimsIdentityService claimsIdentityService,
       IExpenseTypeRepository expenseTypeRepository,
       IExpenseRepository expenseRepository,
+      IDbTransactionService dbTransactionService,
       IMapper mapper)
       : base(claimsIdentityService)
     {
       fExpenseTypeRepository = expenseTypeRepository;
       fExpenseRepository = expenseRepository;
+      fDbTransactionService = dbTransactionService;
       fMapper = mapper;
     }
 
     public async Task<ExpenseModel> Handle(UpdateExpenseRequest request, CancellationToken cancellationToken)
     {
-      if (
-        request.Model.TypeId is not null &&
-        !await fExpenseTypeRepository.ExistsAsync(request.Model.TypeId.Value, cancellationToken))
+      int? typeProjectId = null;
+      if (request.Model.TypeId is not null)
       {
-        throw new BadRequestCodeException($"Expense type with ID '{request.Model.TypeId}' does not exist.");
+        typeProjectId = await fExpenseTypeRepository.GetProjectIdAsync(request.Model.TypeId.Value, cancellationToken);
+        if (typeProjectId == null)
+          throw new BadRequestCodeException($"Expense type with ID '{request.Model.TypeId}' does not exist.");
       }
 
-      var update = fMapper.Map<UpdateExpenseModel, UpdateExpenseDto>(request.Model,
-        opt => opt.AfterMap((_, dto) => dto.UpdaterUserId = GetIdentity().Id));
+      return await fDbTransactionService.InTransactionAsync(async () =>
+      {
+        var update = fMapper.Map<UpdateExpenseModel, UpdateExpenseDto>(request.Model,
+          opt => opt.AfterMap((_, dto) => dto.UpdaterUserId = GetIdentity().Id));
 
-      var dto = await fExpenseRepository.UpdateAsync(request.Id, update, cancellationToken);
-      if (dto is null)
-        throw new NotFoundCodeException(request.Id, "Expense");
+        var dto = await fExpenseRepository.UpdateAsync(request.Id, update, cancellationToken);
+        if (dto is null)
+          throw new NotFoundCodeException(request.Id, "Expense");
 
-      return fMapper.Map<ExpenseDto, ExpenseModel>(dto);
+        if (typeProjectId != null && dto.ProjectId != typeProjectId)
+          throw new BadRequestCodeException($"Expense type with ID '{request.Model.TypeId}' does not belong to project '{dto.ProjectId}'.");
+
+        return fMapper.Map<ExpenseDto, ExpenseModel>(dto);
+      }, cancellationToken);
     }
   }
 }

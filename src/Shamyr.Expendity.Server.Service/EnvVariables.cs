@@ -10,5 +10,7 @@
 
     public const string _ElasticUrl = "ELASTIC_URL";
     public const string _LogLevel = "LOG_LEVEL";
+
+    public const string _GraphqlExposeStackTrace = "GRAPHQL_EXPOSE_STACK_TRACE";
   }
 }

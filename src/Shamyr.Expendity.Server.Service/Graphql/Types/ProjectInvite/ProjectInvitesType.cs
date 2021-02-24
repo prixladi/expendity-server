@@ -7,7 +7,6 @@ namespace Shamyr.Expendity.Server.Service.Graphql.Types.ProjectInvite
   {
     public ProjectInvitesType()
     {
-      Field(x => x.Count);
       Field<NonNullGraphType<ListGraphType<NonNullGraphType<ProjectInviteType>>>>(nameof(ProjectInvitesModel.Entries));
     }
   }

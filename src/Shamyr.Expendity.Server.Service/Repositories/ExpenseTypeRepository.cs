@@ -46,6 +46,14 @@ namespace Shamyr.Expendity.Server.Service.Repositories
         .SingleOrDefaultAsync(cancellationToken);
     }
 
+    public async Task<int?> GetProjectIdAsync(int id, CancellationToken cancellationToken)
+    {
+      return await DbSet
+        .Where(e => e.Id == id)
+        .Select(e => e.ProjectId)
+        .SingleOrDefaultAsync(cancellationToken);
+    }
+
     public async Task<ExpenseTypeDto?> DeleteAsync(int id, CancellationToken cancellationToken)
     {
       var entity = await DbSet

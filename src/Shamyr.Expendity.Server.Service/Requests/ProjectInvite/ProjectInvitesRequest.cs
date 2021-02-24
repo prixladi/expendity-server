@@ -6,12 +6,9 @@ using Shamyr.Expendity.Server.Service.PermissionValidation;
 
 namespace Shamyr.Expendity.Server.Service.Requests.ProjectInvite
 {
-  public class ProjectInvitesRequest:
-    Validable<ProjectInviteFilterModel, ProjectInviteFilterModelValidator>,
-    IProjectPermission,
-    IRequest<ProjectInvitesModel>
+  public class ProjectInvitesRequest: IProjectPermission, IRequest<ProjectInvitesModel>
   {
-    public override ProjectInviteFilterModel Model { get; }
+    public ProjectInviteFilterModel Model { get; }
 
     int IProjectPermission.ProjectId => Model.ProjectId;
     PermissionType IProjectPermission.RequiredPermission => PermissionType.Configure;

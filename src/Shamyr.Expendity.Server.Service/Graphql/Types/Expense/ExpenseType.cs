@@ -7,7 +7,7 @@ namespace Shamyr.Expendity.Server.Service.Graphql.Types.Expense
   {
     public ExpenseType()
     {
-      Field(x => x.Id, type: typeof(IdGraphType));
+      Field(x => x.Id, type: typeof(NonNullGraphType<IdGraphType>));
       Field(x => x.Name);
       Field(x => x.Value);
       Field(x => x.Description, nullable: true);

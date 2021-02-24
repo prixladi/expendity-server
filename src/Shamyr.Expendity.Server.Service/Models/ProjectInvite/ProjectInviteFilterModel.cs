@@ -1,6 +1,6 @@
 ﻿namespace Shamyr.Expendity.Server.Service.Models.ProjectInvite
 {
-  public class ProjectInviteFilterModel: PaginationModel
+  public class ProjectInviteFilterModel
   {
     public int ProjectId { get; init; }
   }

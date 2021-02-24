@@ -25,13 +25,11 @@ namespace Shamyr.Expendity.Server.Service.Handers.Requests.ProjectInvite
     {
       var filter = fMapper.Map<ProjectInviteFilterModel, ProjectInviteFilterDto>(request.Model);
 
-      var count = await fProjectInviteRepository.CountAsync(filter, cancellationToken);
       var entries = await fProjectInviteRepository.GetAsync(filter, cancellationToken);
 
       return new ProjectInvitesModel
       {
-        Entries = fMapper.Map<ICollection<ProjectInviteDto>, ProjectInviteModel[]>(entries),
-        Count = count
+        Entries = fMapper.Map<ICollection<ProjectInviteDto>, ProjectInviteModel[]>(entries)
       };
     }
   }
