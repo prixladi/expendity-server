@@ -8,7 +8,7 @@ namespace Shamyr.Expendity.Server.Service.Configs
     public static void SetupDatabase(DbContextOptionsBuilder options)
     {
       options
-        .UseSqlServer(EnvVariable.Get(EnvVariables._DbConnectionString))
+        .UseNpgsql(EnvVariable.Get(EnvVariables._DbConnectionString))
         .UseSnakeCaseNamingConvention();
 
 #if DEBUG 

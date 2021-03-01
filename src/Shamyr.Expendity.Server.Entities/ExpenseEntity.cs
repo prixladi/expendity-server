@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Shamyr.Expendity.Server.Entities
 {
   [Table("Expenses")]
-  [Index(nameof(AddedUtc))]
+  [Index(nameof(DateAdded))]
   public class ExpenseEntity: EntityBase
   {
     [Required]
@@ -20,7 +20,7 @@ namespace Shamyr.Expendity.Server.Entities
     public string? Description { get; init; }
 
     [Required]
-    public DateTime AddedUtc { get; init; } = DateTime.UtcNow;
+    public DateTime DateAdded { get; init; }
 
     public int? TypeId { get; init; }
 

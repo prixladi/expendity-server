@@ -44,7 +44,8 @@ namespace Shamyr.Expendity.Server.Service.Repositories
         .From(filter.From)
         .To(filter.To)
         // Default order
-        .OrderByDescending(e => e.AddedUtc)
+        .OrderByDescending(e => e.DateAdded)
+        .ThenBy(e => e.Id)
         .Skip(filter.Skip)
         .Take(filter.Count)
         .ProjectTo<ExpenseDto>(fMapper.ConfigurationProvider)
@@ -72,6 +73,7 @@ namespace Shamyr.Expendity.Server.Service.Repositories
     {
       var entity = await DbSet
         .Where(e => e.Id == id)
+        .Include(e => e.CreatorUser)
         .SingleOrDefaultAsync(cancellationToken);
 
       if (entity is null)
@@ -87,6 +89,8 @@ namespace Shamyr.Expendity.Server.Service.Repositories
     {
       var entity = await DbSet
         .Where(e => e.Id == id)
+        .Include(e => e.CreatorUser)
+        .Include(e => e.LastUpdaterUser)
         .SingleOrDefaultAsync(cancellationToken);
 
       if (entity is null)

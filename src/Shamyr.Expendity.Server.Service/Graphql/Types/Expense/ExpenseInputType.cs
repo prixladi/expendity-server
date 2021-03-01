@@ -10,8 +10,8 @@ namespace Shamyr.Expendity.Server.Service.Graphql.Types.Expense
       Field(x => x.Name);
       Field(x => x.Value);
       Field(x => x.Description, nullable: true);
-      Field(x => x.AddedUtc, nullable: true);
       Field(x => x.TypeId, nullable: true);
+      Field(x => x.DateAdded);
       Field(x => x.ProjectId);
     }
   }

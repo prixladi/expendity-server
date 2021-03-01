@@ -13,7 +13,7 @@ namespace Shamyr.Expendity.Server.Service.Configs
       SchemaPollingInterval = 50000
     };
 
-    public static bool ExposeStackTrace
+    public static bool ShouldExposeStackTrace
     {
       get
       {

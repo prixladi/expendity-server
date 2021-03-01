@@ -25,7 +25,10 @@ namespace Shamyr.Expendity.Server.Service.Repositories
         {
           ExpenseTypeId = e.Key,
           Sum = e.Select(x => x.Value).Sum()
-        }).ToArrayAsync(cancellationToken);
+        })
+        .OrderByDescending(x => x.Sum)
+        .Top(filter.Top)
+        .ToArrayAsync(cancellationToken);
 
       return new SummaryDto
       {

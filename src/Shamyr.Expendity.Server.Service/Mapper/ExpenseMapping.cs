@@ -22,10 +22,10 @@ namespace Shamyr.Expendity.Server.Service.Mapper
       exp.CreateMap<UpdateExpenseModel, UpdateExpenseDto>();
 
       exp.CreateMap<CreateExpenseDto, ExpenseEntity>()
-        .ForMember(e => e.AddedUtc, mc => mc.MapFrom(me => me.AddedUtc ?? DateTime.UtcNow));
+        .ForMember(e => e.DateAdded, mc => mc.MapFrom(me => me.DateAdded));
 
       exp.CreateMap<UpdateExpenseDto, ExpenseEntity>()
-        .ForMember(e => e.AddedUtc, mc => mc.MapFrom(me => me.AddedUtc ?? DateTime.UtcNow));
+        .ForMember(e => e.DateAdded, mc => mc.MapFrom(me => me.DateAdded));
     }
   }
 }

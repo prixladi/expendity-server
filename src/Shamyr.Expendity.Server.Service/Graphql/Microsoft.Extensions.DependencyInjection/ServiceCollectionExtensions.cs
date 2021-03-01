@@ -13,8 +13,8 @@ namespace Microsoft.Extensions.DependencyInjection
     public static void AddGraphQLSchema(this IServiceCollection services, bool exposeStackTrace)
     {
       var builder = services.AddGraphQL(options => options.EnableMetrics = true)
-      .AddUserContextBuilder(context => new UserContext(context.User))
-      .AddSystemTextJson();
+        .AddUserContextBuilder(context => new UserContext(context.User))
+        .AddSystemTextJson();
 
       if (exposeStackTrace)
         builder.AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true);

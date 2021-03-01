@@ -11,25 +11,21 @@ namespace Shamyr.Expendity.Server.Service.Database
     {
       BuildByConvention(builder);
 
-      builder
-        .Entity<ExpenseEntity>()
+      builder.Entity<ExpenseEntity>()
         .HasOne(e => e.Type)
         .WithMany(e => e!.Expenses)
         .OnDelete(DeleteBehavior.SetNull);
 
-      builder
-         .Entity<ExpenseEntity>()
-         .Property(e => e.AddedUtc)
+      builder.Entity<ExpenseEntity>()
+         .Property(e => e.DateAdded)
          .HasConversion(date => date, date => DateTime.SpecifyKind(date, DateTimeKind.Utc));
 
-      builder
-        .Entity<ExpenseEntity>()
+      builder.Entity<ExpenseEntity>()
         .HasOne(e => e.CreatorUser)
         .WithMany()
         .OnDelete(DeleteBehavior.Restrict);
 
-      builder
-        .Entity<ExpenseEntity>()
+      builder.Entity<ExpenseEntity>()
         .HasOne(e => e.LastUpdaterUser)
         .WithMany()
         .OnDelete(DeleteBehavior.Restrict);

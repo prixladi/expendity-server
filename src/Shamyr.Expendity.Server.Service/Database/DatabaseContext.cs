@@ -10,7 +10,7 @@ namespace Shamyr.Expendity.Server.Service.Database
     //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     //{
     //  optionsBuilder
-    //    .UseSqlServer("Server=localhost;Database=Expendify;User Id=SA;Password=Pass@word1;")
+    //    .UseNpgsql("Server=localhost;Database=Expendify;User Id=SA;Password=Pass@word1;")
     //    .UseSnakeCaseNamingConvention();
     //}
 

@@ -10,6 +10,7 @@ namespace Shamyr.Expendity.Server.Service.Graphql.Types.Summary
       Field(x => x.From, nullable: true);
       Field(x => x.To, nullable: true);
       Field(x => x.ProjectId);
+      Field(x => x.Top, nullable: true);
     }
   }
 }

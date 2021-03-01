@@ -11,7 +11,7 @@ namespace Shamyr.Expendity.Server.Service.Graphql.Types.Expense
       Field(x => x.Name);
       Field(x => x.Value);
       Field(x => x.Description, nullable: true);
-      Field(x => x.AddedUtc);
+      Field(x => x.DateAdded);
       Field(x => x.TypeId, nullable: true);
       Field(x => x.ProjectId);
       Field(x => x.CreatorUserEmail);

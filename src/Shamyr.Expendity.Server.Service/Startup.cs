@@ -1,5 +1,4 @@
-﻿using GraphQL.Server.Common;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Shamyr.Cloud.Authority.Client.Authentication;
@@ -36,7 +35,7 @@ namespace Shamyr.Expendity.Server.Service
 
       services.AddAuthorization();
 
-      services.AddGraphQLSchema(GraphQLConfig.ExposeStackTrace);
+      services.AddGraphQLSchema(GraphQLConfig.ShouldExposeStackTrace);
 
       services.AddServiceAssembly();
     }

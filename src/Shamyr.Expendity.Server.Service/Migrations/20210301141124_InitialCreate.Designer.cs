@@ -2,76 +2,76 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Shamyr.Expendity.Server.Service.Database;
 
 namespace Shamyr.Expendity.Server.Service.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20210214121654_Currency")]
-    partial class Currency
+    [Migration("20210301141124_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityColumns()
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.2");
+                .HasAnnotation("Relational:MaxIdentifierLength", 63)
+                .HasAnnotation("ProductVersion", "5.0.3")
+                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
             modelBuilder.Entity("Shamyr.Expendity.Server.Entities.ExpenseEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("id")
-                        .UseIdentityColumn();
-
-                    b.Property<DateTime>("AddedUtc")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("added_utc");
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("CreatorUserId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("creator_user_id");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("date_added");
 
                     b.Property<string>("Description")
                         .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)")
+                        .HasColumnType("character varying(1000)")
                         .HasColumnName("description");
 
                     b.Property<int?>("LastUpdaterUserId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("last_updater_user_id");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("name");
 
                     b.Property<int>("ProjectId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("project_id");
 
                     b.Property<int?>("TypeId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("type_id");
 
-                    b.Property<double>("Value")
-                        .HasColumnType("float")
+                    b.Property<decimal>("Value")
+                        .HasColumnType("numeric")
                         .HasColumnName("value");
 
                     b.HasKey("Id")
                         .HasName("pk_expenses");
 
-                    b.HasIndex("AddedUtc")
-                        .HasDatabaseName("ix_expenses_added_utc");
-
                     b.HasIndex("CreatorUserId")
                         .HasDatabaseName("ix_expenses_creator_user_id");
+
+                    b.HasIndex("DateAdded")
+                        .HasDatabaseName("ix_expenses_date_added");
 
                     b.HasIndex("LastUpdaterUserId")
                         .HasDatabaseName("ix_expenses_last_updater_user_id");
@@ -89,23 +89,23 @@ namespace Shamyr.Expendity.Server.Service.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("id")
-                        .UseIdentityColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Description")
                         .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)")
+                        .HasColumnType("character varying(1000)")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("name");
 
                     b.Property<int>("ProjectId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("project_id");
 
                     b.HasKey("Id")
@@ -121,27 +121,27 @@ namespace Shamyr.Expendity.Server.Service.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("id")
-                        .UseIdentityColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("CurrencyType")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("currency_type");
 
                     b.Property<bool>("Deleted")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("deleted");
 
                     b.Property<string>("Description")
                         .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)")
+                        .HasColumnType("character varying(1000)")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -150,24 +150,63 @@ namespace Shamyr.Expendity.Server.Service.Migrations
                     b.ToTable("Projects");
                 });
 
+            modelBuilder.Entity("Shamyr.Expendity.Server.Entities.ProjectInviteEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<bool>("IsMultiUse")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_multi_use");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("integer")
+                        .HasColumnName("project_id");
+
+                    b.Property<int>("ProjectPermissionType")
+                        .HasColumnType("integer")
+                        .HasColumnName("project_permission_type");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)")
+                        .HasColumnName("token");
+
+                    b.HasKey("Id")
+                        .HasName("pk_project_invites");
+
+                    b.HasIndex("ProjectId")
+                        .HasDatabaseName("ix_project_invites_project_id");
+
+                    b.HasIndex("Token")
+                        .IsUnique()
+                        .HasDatabaseName("ix_project_invites_token");
+
+                    b.ToTable("ProjectInvites");
+                });
+
             modelBuilder.Entity("Shamyr.Expendity.Server.Entities.ProjectPermissionEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("id")
-                        .UseIdentityColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("ProjectId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("project_id");
 
                     b.Property<int>("Type")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("type");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("user_id");
 
                     b.HasKey("Id")
@@ -190,30 +229,30 @@ namespace Shamyr.Expendity.Server.Service.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("id")
-                        .UseIdentityColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("email");
 
                     b.Property<string>("FamilyName")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("family_name");
 
                     b.Property<string>("GivenName")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("given_name");
 
                     b.Property<string>("SubjectId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasColumnType("text")
                         .HasColumnName("subject_id");
 
                     b.Property<string>("Username")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("username");
 
                     b.HasKey("Id")
@@ -269,6 +308,18 @@ namespace Shamyr.Expendity.Server.Service.Migrations
                         .WithMany("ExpenseTypes")
                         .HasForeignKey("ProjectId")
                         .HasConstraintName("fk_expense_types_projects_project_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("Shamyr.Expendity.Server.Entities.ProjectInviteEntity", b =>
+                {
+                    b.HasOne("Shamyr.Expendity.Server.Entities.ProjectEntity", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .HasConstraintName("fk_project_invites_projects_project_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

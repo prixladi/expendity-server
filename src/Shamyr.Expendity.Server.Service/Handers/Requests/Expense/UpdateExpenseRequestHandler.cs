@@ -46,7 +46,7 @@ namespace Shamyr.Expendity.Server.Service.Handers.Requests.Expense
       return await fDbTransactionService.InTransactionAsync(async () =>
       {
         var update = fMapper.Map<UpdateExpenseModel, UpdateExpenseDto>(request.Model,
-          opt => opt.AfterMap((_, dto) => dto.UpdaterUserId = GetIdentity().Id));
+          opt => opt.AfterMap((_, dto) => dto.LastUpdaterUserId = GetIdentity().Id));
 
         var dto = await fExpenseRepository.UpdateAsync(request.Id, update, cancellationToken);
         if (dto is null)
@@ -55,7 +55,9 @@ namespace Shamyr.Expendity.Server.Service.Handers.Requests.Expense
         if (typeProjectId != null && dto.ProjectId != typeProjectId)
           throw new BadRequestCodeException($"Expense type with ID '{request.Model.TypeId}' does not belong to project '{dto.ProjectId}'.");
 
-        return fMapper.Map<ExpenseDto, ExpenseModel>(dto);
+        return fMapper.Map<ExpenseDto, ExpenseModel>(dto,
+          opt => opt.AfterMap((_, model) => model.LastUpdaterUserEmail = GetIdentity().Email));
+
       }, cancellationToken);
     }
   }
