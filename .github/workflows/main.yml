@@ -31,7 +31,7 @@ jobs:
         with:
           file: ./src/Shamyr.Expendity.Server.Service/Dockerfile
           push: true
-          tags: shamyr/urlik-server:latest
+          tags: shamyr/expendity-server:latest
 
       -
         name: Image digest
